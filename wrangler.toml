@@ -1,0 +1,10 @@
+name = "blt-roadmap-sync"
+main = "worker.js"
+compatibility_date = "2026-08-09"
+
+[vars]
+GITHUB_OWNER = "TristanH123eng"
+GITHUB_REPO = "BLT-4-Year-Roadmap"
+GITHUB_BRANCH = "main"
+ROADMAP_PATH = "roadmap.json"
+ALLOWED_ORIGIN = "https://tristanh123eng.github.io"

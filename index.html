@@ -546,6 +546,61 @@ svg { display: block; }
 .color-input::-webkit-color-swatch { border:0; border-radius:5px; }
 .appearance-actions { display:flex; align-items:center; gap:9px; margin-top:18px; padding-top:18px; border-top:1px solid var(--line); }
 
+
+/* GitHub sync */
+.sync-status-button {
+  min-height: 40px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255,255,255,.035);
+  color: #aeb7c5;
+  font-size: 11px;
+  font-weight: 700;
+  transition: all .16s ease;
+}
+.sync-status-button:hover { border-color: var(--line-strong); background: rgba(255,255,255,.06); color: var(--text); }
+.sync-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #667181; box-shadow: 0 0 0 4px rgba(102,113,129,.08); }
+.sync-status-button[data-state="saved"] .sync-status-dot { background: var(--green); box-shadow: 0 0 0 4px rgba(86,214,160,.08); }
+.sync-status-button[data-state="syncing"] .sync-status-dot { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); animation: pulse 1.2s ease-in-out infinite; }
+.sync-status-button[data-state="pending"] .sync-status-dot { background: var(--yellow); box-shadow: 0 0 0 4px rgba(244,199,93,.08); }
+.sync-status-button[data-state="error"] .sync-status-dot { background: var(--red); box-shadow: 0 0 0 4px rgba(255,107,118,.08); }
+.sync-dialog {
+  width: min(650px, calc(100% - 28px));
+  max-height: min(780px, calc(100vh - 34px));
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  background: #101620;
+  color: var(--text);
+  box-shadow: 0 36px 120px rgba(0,0,0,.62);
+}
+.sync-dialog::backdrop { background: rgba(2,4,8,.75); backdrop-filter: blur(8px); }
+.sync-dialog-inner { padding: 25px; }
+.sync-note { margin: -10px 0 22px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.sync-note strong { color: #dce3ef; }
+.sync-grid { display: grid; gap: 14px; }
+.sync-field { display: grid; gap: 7px; }
+.sync-field > span { color: #9099a8; font-size: 11px; font-weight: 700; }
+.sync-field input[type="url"], .sync-field input[type="password"] {
+  width: 100%; height: 43px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px;
+  outline: none; color: var(--text); background: rgba(16,21,32,.72);
+}
+.sync-field input:focus { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+.sync-help { color: #697382; font-size: 10px; line-height: 1.5; }
+.sync-toggle { min-height: 48px; padding: 10px 12px; display:flex; align-items:center; justify-content:space-between; gap:16px; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.02); }
+.sync-toggle > div { display:grid; gap:3px; }
+.sync-toggle strong { font-size:12px; color:#d5dbe5; }
+.sync-toggle small { color:var(--muted); font-size:10px; }
+.sync-toggle input { width:18px; height:18px; accent-color: var(--accent); }
+.sync-actions { display:flex; align-items:center; flex-wrap:wrap; gap:9px; margin-top:20px; padding-top:18px; border-top:1px solid var(--line); }
+.sync-security { margin-top: 16px; padding: 12px 13px; border: 1px solid rgba(86,214,160,.12); border-radius: 10px; background: rgba(86,214,160,.045); color: #8ea79c; font-size: 10px; line-height: 1.55; }
+.sync-security strong { color: #a9dcc5; }
+
 /* Dialog */
 .goal-dialog {
   width: min(670px, calc(100% - 28px));
@@ -705,6 +760,10 @@ svg { display: block; }
           Import
         </label>
         <input id="importInput" type="file" accept="application/json" hidden />
+        <button class="sync-status-button desktop-action" id="syncStatusBtn" type="button" data-state="local" title="Configure GitHub sync">
+          <span class="sync-status-dot" aria-hidden="true"></span>
+          <span id="syncStatusText">Local only</span>
+        </button>
         <button class="button button-secondary desktop-action" id="appearanceBtn" type="button" title="Customize colors">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a1.8 1.8 0 0 0 0-3.6h-.7a1.5 1.5 0 0 1 0-3h2.2A6.3 6.3 0 0 0 21 8.1C21 5.3 17 3 12 3Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="9" r="1" fill="currentColor"/><circle cx="10" cy="6.5" r="1" fill="currentColor"/><circle cx="14" cy="6.5" r="1" fill="currentColor"/><circle cx="16.5" cy="9" r="1" fill="currentColor"/></svg>
           Appearance
@@ -798,6 +857,7 @@ svg { display: block; }
           <button class="button button-secondary mobile-only" id="mobileExportBtn" type="button" onclick="document.querySelector('#exportBtn').click()">Export</button>
           <label class="button button-secondary mobile-only" for="importInput">Import</label>
           <button class="button button-secondary mobile-only" type="button" onclick="document.querySelector('#appearanceBtn').click()">Colors</button>
+          <button class="button button-secondary mobile-only" type="button" onclick="document.querySelector('#syncStatusBtn').click()">Sync</button>
         </div>
       </div>
 
@@ -866,11 +926,11 @@ svg { display: block; }
           </div>
           <div class="workflow-point">
             <span>02</span>
-            <div><strong>Saved automatically</strong><small>Changes persist locally in the browser.</small></div>
+            <div><strong>Saved automatically</strong><small>Local autosave plus optional secure GitHub sync.</small></div>
           </div>
           <div class="workflow-point">
             <span>03</span>
-            <div><strong>Portable by design</strong><small>Export and import the complete roadmap as JSON.</small></div>
+            <div><strong>Shared source of truth</strong><small>Authorized editors can sync roadmap.json to GitHub.</small></div>
           </div>
         </div>
       </div>
@@ -886,6 +946,45 @@ svg { display: block; }
     </div>
     <button class="text-button" id="resetBtn" type="button">Reset starter roadmap</button>
   </footer>
+
+  <dialog id="syncDialog" class="sync-dialog">
+    <div class="sync-dialog-inner">
+      <div class="dialog-header">
+        <div>
+          <span class="section-kicker">SHARED WORKSPACE</span>
+          <h2>GitHub sync</h2>
+        </div>
+        <button class="icon-button close-button" id="closeSyncBtn" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <p class="sync-note">Connect this browser to the small BLT sync service. The service stores the <strong>GitHub credential securely</strong>; this page only keeps a separate workspace write key.</p>
+      <div class="sync-grid">
+        <label class="sync-field">
+          <span>Sync service URL</span>
+          <input id="syncWorkerUrl" type="url" placeholder="https://blt-roadmap-sync.your-subdomain.workers.dev" autocomplete="url" />
+          <small class="sync-help">Paste the Cloudflare Worker URL after you deploy the included worker.</small>
+        </label>
+        <label class="sync-field">
+          <span>Workspace write key</span>
+          <input id="syncWorkspaceKey" type="password" placeholder="Shared BLT editor key" autocomplete="off" />
+          <small class="sync-help">This is NOT your GitHub token. Give this key only to club members who should be able to edit the shared roadmap.</small>
+        </label>
+        <label class="sync-toggle">
+          <div><strong>Auto-sync changes</strong><small>Push to roadmap.json about 2.5 seconds after the last edit.</small></div>
+          <input id="syncAutoToggle" type="checkbox" checked />
+        </label>
+      </div>
+      <div class="sync-security"><strong>Security:</strong> the GitHub token never enters this webpage or localStorage. It stays encrypted as a secret in the Worker.</div>
+      <div class="sync-actions">
+        <button class="button button-secondary" id="testSyncBtn" type="button">Test connection</button>
+        <button class="button button-secondary" id="pullSyncBtn" type="button">Pull latest</button>
+        <button class="button button-secondary" id="pushSyncBtn" type="button">Push now</button>
+        <span class="dialog-spacer"></span>
+        <button class="button button-primary" id="saveSyncBtn" type="button">Save settings</button>
+      </div>
+    </div>
+  </dialog>
 
   <dialog id="appearanceDialog" class="appearance-dialog">
     <div class="appearance-dialog-inner">
@@ -986,6 +1085,8 @@ svg { display: block; }
   <script>
 const STORAGE_KEY = "blt-roadmap-v1";
 const SETTINGS_KEY = "blt-roadmap-settings-v1";
+const SYNC_SETTINGS_KEY = "blt-roadmap-sync-v1";
+const REMOTE_CACHE_KEY = "blt-roadmap-remote-cache-v1";
 const TARGET_DATE = "2030-04-30";
 const DEFAULT_ACCENT = "#4f8cff";
 
@@ -1179,6 +1280,10 @@ let categoryColors = { ...defaultCategoryColors, ...(appearance.categoryColors |
 let goals = loadGoals();
 let filters = { search: "", status: "all", category: "all" };
 let expanded = new Set();
+let syncSettings = loadSyncSettings();
+let syncTimer = null;
+let syncInFlight = false;
+let lastSyncAt = null;
 
 const els = {
   roadmap: document.querySelector("#roadmap"),
@@ -1197,6 +1302,17 @@ const els = {
   exportBtn: document.querySelector("#exportBtn"),
   importInput: document.querySelector("#importInput"),
   appearanceBtn: document.querySelector("#appearanceBtn"),
+  syncStatusBtn: document.querySelector("#syncStatusBtn"),
+  syncStatusText: document.querySelector("#syncStatusText"),
+  syncDialog: document.querySelector("#syncDialog"),
+  closeSyncBtn: document.querySelector("#closeSyncBtn"),
+  syncWorkerUrl: document.querySelector("#syncWorkerUrl"),
+  syncWorkspaceKey: document.querySelector("#syncWorkspaceKey"),
+  syncAutoToggle: document.querySelector("#syncAutoToggle"),
+  testSyncBtn: document.querySelector("#testSyncBtn"),
+  pullSyncBtn: document.querySelector("#pullSyncBtn"),
+  pushSyncBtn: document.querySelector("#pushSyncBtn"),
+  saveSyncBtn: document.querySelector("#saveSyncBtn"),
   appearanceDialog: document.querySelector("#appearanceDialog"),
   closeAppearanceBtn: document.querySelector("#closeAppearanceBtn"),
   doneAppearanceBtn: document.querySelector("#doneAppearanceBtn"),
@@ -1225,6 +1341,202 @@ const els = {
   categoryOptions: document.querySelector("#categoryOptions"),
   toast: document.querySelector("#toast")
 };
+
+function loadSyncSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SYNC_SETTINGS_KEY));
+    return {
+      workerUrl: typeof saved?.workerUrl === "string" ? saved.workerUrl : "",
+      workspaceKey: typeof saved?.workspaceKey === "string" ? saved.workspaceKey : "",
+      autoSync: saved?.autoSync !== false
+    };
+  } catch {
+    return { workerUrl: "", workspaceKey: "", autoSync: true };
+  }
+}
+
+function normalizeWorkerUrl(value = "") {
+  return String(value).trim().replace(/\/+$/, "");
+}
+
+function syncConfigured() {
+  return Boolean(normalizeWorkerUrl(syncSettings.workerUrl) && syncSettings.workspaceKey);
+}
+
+function setSyncStatus(state, text) {
+  if (!els.syncStatusBtn || !els.syncStatusText) return;
+  els.syncStatusBtn.dataset.state = state;
+  const defaults = {
+    local: "Local only",
+    ready: "GitHub sync ready",
+    pending: "Changes pending",
+    syncing: "Syncing…",
+    saved: "Saved to GitHub",
+    error: "Sync failed"
+  };
+  els.syncStatusText.textContent = text || defaults[state] || "GitHub sync";
+  els.syncStatusBtn.title = state === "error" ? "GitHub sync failed — click for settings" : "GitHub sync settings";
+}
+
+function buildSharedPayload() {
+  return {
+    schemaVersion: 1,
+    club: "BLT Rocketry",
+    mission: "Liquid SpaceShot",
+    targetDate: TARGET_DATE,
+    updatedAt: new Date().toISOString(),
+    appearance: { accent: appearance.accent, categoryColors: { ...categoryColors } },
+    goals: structuredClone(goals)
+  };
+}
+
+function sanitizeRemoteGoals(importedGoals) {
+  if (!Array.isArray(importedGoals)) throw new Error("No goals array found");
+  const clean = importedGoals.map((goal, index) => ({
+    id: String(goal.id || `remote-${index}-${Date.now()}`),
+    title: String(goal.title || "Untitled goal"),
+    description: String(goal.description || ""),
+    category: String(goal.category || "General"),
+    dueDate: /^\d{4}-\d{2}-\d{2}$/.test(goal.dueDate) ? goal.dueDate : TARGET_DATE,
+    status: ["todo", "in-progress", "blocked", "done"].includes(goal.status) ? goal.status : "todo",
+    parentId: goal.parentId ? String(goal.parentId) : null
+  }));
+  const ids = new Set(clean.map(g => g.id));
+  clean.forEach(goal => { if (goal.parentId && !ids.has(goal.parentId)) goal.parentId = null; });
+  return clean;
+}
+
+function applyRemotePayload(data, message = "Pulled latest roadmap") {
+  const importedGoals = Array.isArray(data) ? data : data?.goals;
+  goals = sanitizeRemoteGoals(importedGoals);
+  if (!Array.isArray(data) && data?.appearance) {
+    appearance = {
+      accent: /^#[0-9a-f]{6}$/i.test(data.appearance.accent || "") ? data.appearance.accent : appearance.accent,
+      categoryColors: data.appearance.categoryColors && typeof data.appearance.categoryColors === "object" ? data.appearance.categoryColors : appearance.categoryColors
+    };
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(appearance));
+  localStorage.setItem(REMOTE_CACHE_KEY, "1");
+  expanded.clear();
+  applyAppearance();
+  render();
+  if (message) showToast(message);
+}
+
+function scheduleGithubSync() {
+  clearTimeout(syncTimer);
+  if (!syncConfigured() || !syncSettings.autoSync) {
+    setSyncStatus("local", syncConfigured() ? "Auto-sync off" : "Local only");
+    return;
+  }
+  setSyncStatus("pending");
+  syncTimer = setTimeout(() => pushToGithub({ silent: true }), 2500);
+}
+
+async function pushToGithub({ silent = false } = {}) {
+  if (!syncConfigured()) {
+    setSyncStatus("local");
+    if (!silent) showToast("Configure GitHub sync first");
+    return false;
+  }
+  if (syncInFlight) return false;
+  syncInFlight = true;
+  setSyncStatus("syncing");
+  try {
+    const response = await fetch(`${normalizeWorkerUrl(syncSettings.workerUrl)}/roadmap`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-BLT-Sync-Key": syncSettings.workspaceKey
+      },
+      body: JSON.stringify(buildSharedPayload())
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || `Sync failed (${response.status})`);
+    lastSyncAt = new Date();
+    localStorage.setItem(REMOTE_CACHE_KEY, "1");
+    setSyncStatus("saved");
+    if (!silent) showToast("Roadmap saved to GitHub");
+    return true;
+  } catch (error) {
+    console.error("GitHub sync error", error);
+    setSyncStatus("error");
+    if (!silent) alert(`GitHub sync failed: ${error.message}`);
+    return false;
+  } finally {
+    syncInFlight = false;
+  }
+}
+
+async function pullFromGithub({ silent = false, allowPublicFallback = true } = {}) {
+  const worker = normalizeWorkerUrl(syncSettings.workerUrl);
+  const url = worker ? `${worker}/roadmap?t=${Date.now()}` : allowPublicFallback ? `./roadmap.json?t=${Date.now()}` : "";
+  if (!url) return false;
+  try {
+    if (worker) setSyncStatus("syncing", "Pulling…");
+    const response = await fetch(url, { method: "GET", cache: "no-store" });
+    if (!response.ok) {
+      if (response.status === 404) {
+        if (worker) setSyncStatus(syncConfigured() ? "ready" : "local", worker ? "Ready — no remote file yet" : "Local only");
+        return false;
+      }
+      throw new Error(`Pull failed (${response.status})`);
+    }
+    const data = await response.json();
+    applyRemotePayload(data, silent ? "" : "Pulled latest roadmap from GitHub");
+    if (worker) setSyncStatus(syncConfigured() ? "saved" : "ready", syncConfigured() ? "Up to date" : "Read-only GitHub");
+    return true;
+  } catch (error) {
+    console.error("GitHub pull error", error);
+    if (worker) setSyncStatus("error");
+    if (!silent) alert(`Could not pull the shared roadmap: ${error.message}`);
+    return false;
+  }
+}
+
+function openSyncDialog() {
+  els.syncWorkerUrl.value = syncSettings.workerUrl || "";
+  els.syncWorkspaceKey.value = syncSettings.workspaceKey || "";
+  els.syncAutoToggle.checked = syncSettings.autoSync !== false;
+  els.syncDialog.showModal();
+}
+
+function closeSyncDialog() {
+  els.syncDialog.close();
+}
+
+function saveSyncDialogSettings() {
+  syncSettings = {
+    workerUrl: normalizeWorkerUrl(els.syncWorkerUrl.value),
+    workspaceKey: els.syncWorkspaceKey.value,
+    autoSync: els.syncAutoToggle.checked
+  };
+  localStorage.setItem(SYNC_SETTINGS_KEY, JSON.stringify(syncSettings));
+  setSyncStatus(syncConfigured() ? "ready" : "local");
+  closeSyncDialog();
+  showToast(syncConfigured() ? "GitHub sync settings saved" : "Sync settings saved");
+  if (syncConfigured() && syncSettings.autoSync) scheduleGithubSync();
+}
+
+async function testSyncConnection() {
+  const workerUrl = normalizeWorkerUrl(els.syncWorkerUrl.value);
+  if (!workerUrl) return alert("Enter the Worker URL first.");
+  els.testSyncBtn.disabled = true;
+  const old = els.testSyncBtn.textContent;
+  els.testSyncBtn.textContent = "Testing…";
+  try {
+    const response = await fetch(`${workerUrl}/health?t=${Date.now()}`, { cache: "no-store" });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) throw new Error(result.error || `HTTP ${response.status}`);
+    showToast(`Connected to ${result.repo || "BLT sync service"}`);
+  } catch (error) {
+    alert(`Connection test failed: ${error.message}`);
+  } finally {
+    els.testSyncBtn.disabled = false;
+    els.testSyncBtn.textContent = old;
+  }
+}
 
 function loadAppearance() {
   try {
@@ -1268,8 +1580,10 @@ function applyAppearance() {
 
 function saveAppearance(message) {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(appearance));
+  localStorage.removeItem(REMOTE_CACHE_KEY);
   applyAppearance();
   renderRoadmap();
+  scheduleGithubSync();
   if (message) showToast(message);
 }
 
@@ -1312,7 +1626,9 @@ function loadGoals() {
 
 function saveGoals(message) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
+  localStorage.removeItem(REMOTE_CACHE_KEY);
   render();
+  scheduleGithubSync();
   if (message) showToast(message);
 }
 
@@ -1668,14 +1984,7 @@ function handleRoadmapClick(event) {
 }
 
 function exportRoadmap() {
-  const payload = {
-    club: "BLT Rocketry",
-    mission: "Liquid SpaceShot",
-    targetDate: TARGET_DATE,
-    exportedAt: new Date().toISOString(),
-    appearance: { accent: appearance.accent, categoryColors },
-    goals
-  };
+  const payload = { ...buildSharedPayload(), exportedAt: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
@@ -1704,19 +2013,7 @@ function importRoadmap(file) {
       const importedGoals = Array.isArray(data) ? data : data.goals;
       if (!Array.isArray(importedGoals)) throw new Error("No goals array found");
 
-      const clean = importedGoals.map((goal, index) => ({
-        id: String(goal.id || `imported-${index}-${Date.now()}`),
-        title: String(goal.title || "Untitled goal"),
-        description: String(goal.description || ""),
-        category: String(goal.category || "General"),
-        dueDate: /^\d{4}-\d{2}-\d{2}$/.test(goal.dueDate) ? goal.dueDate : TARGET_DATE,
-        status: ["todo", "in-progress", "blocked", "done"].includes(goal.status) ? goal.status : "todo",
-        parentId: goal.parentId ? String(goal.parentId) : null
-      }));
-
-      const ids = new Set(clean.map(g => g.id));
-      clean.forEach(goal => { if (goal.parentId && !ids.has(goal.parentId)) goal.parentId = null; });
-      goals = clean;
+      goals = sanitizeRemoteGoals(importedGoals);
       expanded.clear();
       saveGoals("Roadmap imported");
     } catch (error) {
@@ -1753,6 +2050,18 @@ els.categoryFilter.addEventListener("change", event => {
 
 els.addGoalTopBtn.addEventListener("click", () => openGoalDialog());
 els.appearanceBtn.addEventListener("click", openAppearanceDialog);
+els.syncStatusBtn.addEventListener("click", openSyncDialog);
+els.closeSyncBtn.addEventListener("click", closeSyncDialog);
+els.saveSyncBtn.addEventListener("click", saveSyncDialogSettings);
+els.testSyncBtn.addEventListener("click", testSyncConnection);
+els.pullSyncBtn.addEventListener("click", async () => {
+  syncSettings = { workerUrl: normalizeWorkerUrl(els.syncWorkerUrl.value), workspaceKey: els.syncWorkspaceKey.value, autoSync: els.syncAutoToggle.checked };
+  await pullFromGithub({ silent: false, allowPublicFallback: false });
+});
+els.pushSyncBtn.addEventListener("click", async () => {
+  syncSettings = { workerUrl: normalizeWorkerUrl(els.syncWorkerUrl.value), workspaceKey: els.syncWorkspaceKey.value, autoSync: els.syncAutoToggle.checked };
+  await pushToGithub({ silent: false });
+});
 els.closeAppearanceBtn.addEventListener("click", closeAppearanceDialog);
 els.doneAppearanceBtn.addEventListener("click", closeAppearanceDialog);
 els.resetColorsBtn.addEventListener("click", () => {
@@ -1804,11 +2113,19 @@ els.appearanceDialog.addEventListener("click", event => {
   if (event.target === els.appearanceDialog) closeAppearanceDialog();
 });
 
+els.syncDialog.addEventListener("click", event => {
+  if (event.target === els.syncDialog) closeSyncDialog();
+});
+
 window.addEventListener("storage", event => {
   if (event.key === STORAGE_KEY) {
     goals = loadGoals();
     render();
     showToast("Roadmap refreshed from another tab");
+  }
+  if (event.key === SYNC_SETTINGS_KEY) {
+    syncSettings = loadSyncSettings();
+    setSyncStatus(syncConfigured() ? "ready" : "local");
   }
 });
 
@@ -1819,6 +2136,7 @@ document.addEventListener("keydown", event => {
   }
   if (event.key === "Escape" && els.goalDialog.open) closeGoalDialog();
   if (event.key === "Escape" && els.appearanceDialog.open) closeAppearanceDialog();
+  if (event.key === "Escape" && els.syncDialog.open) closeSyncDialog();
   if ((event.key === "Enter" || event.key === " ") && document.activeElement?.matches?.('[data-action="expand"]')) {
     event.preventDefault();
     document.activeElement.click();
@@ -1827,6 +2145,17 @@ document.addEventListener("keydown", event => {
 
 applyAppearance();
 render();
+setSyncStatus(syncConfigured() ? "ready" : "local");
+
+(async function initializeSharedRoadmap() {
+  const hasLocalRoadmap = Boolean(localStorage.getItem(STORAGE_KEY));
+  const localIsRemoteCache = localStorage.getItem(REMOTE_CACHE_KEY) === "1";
+  if (syncConfigured()) {
+    await pullFromGithub({ silent: true, allowPublicFallback: false });
+  } else if (!hasLocalRoadmap || localIsRemoteCache) {
+    await pullFromGithub({ silent: true, allowPublicFallback: true });
+  }
+})();
 
   </script>
 </body>
