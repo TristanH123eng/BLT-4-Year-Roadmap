@@ -333,8 +333,8 @@ function renderRoadmap() {
     const depth = goalDepth(goal);
     const children = getChildren(goal.id);
     const isExpanded = expanded.has(goal.id) || filters.search || filters.status !== "all" || filters.category !== "all";
-    const color = categoryColors[goal.category] || "#ff7144";
-    const childLabel = children.length ? `${children.length} subgoal${children.length === 1 ? "" : "s"}` : "No subgoals";
+    const color = categoryColors[goal.category] || "#ff7a3d";
+    const childLabel = children.length ? `${children.length} subgoal${children.length === 1 ? "" : "s"}` : "";
 
     html += `
       <article class="goal-card ${goal.status === "done" ? "is-done" : ""} ${isExpanded ? "expanded" : ""}" style="--depth:${depth};--category-color:${color}" data-id="${safeText(goal.id)}">
@@ -342,19 +342,24 @@ function renderRoadmap() {
           <button class="goal-check ${goal.status === "done" ? "checked" : ""}" type="button" data-action="toggle-done" aria-label="${goal.status === "done" ? "Mark incomplete" : "Mark complete"}">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4.2 4.2L19 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <div class="goal-content" data-action="expand">
+          <div class="goal-content" data-action="expand" role="button" tabindex="0" aria-label="${isExpanded ? "Collapse" : "Expand"} ${safeText(goal.title)}">
             <div class="goal-topline">
               <h3 class="goal-title">${safeText(goal.title)}</h3>
+              <span class="category-pill">${safeText(goal.category || "General")}</span>
               <span class="badge ${safeText(goal.status)}">${safeText(statusLabel(goal.status))}</span>
-              <span class="child-count">${childLabel}</span>
+              ${childLabel ? `<span class="child-count">${childLabel}</span>` : ""}
             </div>
             ${goal.description ? `<p class="goal-description">${safeText(goal.description)}</p>` : ""}
           </div>
           <div class="goal-side">
             <span class="date-pill">${prettyDate(goal.dueDate)}</span>
             <div class="goal-actions">
-              <button class="icon-button" type="button" data-action="add-child" aria-label="Add subgoal" title="Add subgoal">+</button>
-              <button class="icon-button" type="button" data-action="edit" aria-label="Edit goal" title="Edit goal">⋯</button>
+              <button class="icon-button" type="button" data-action="add-child" aria-label="Add subgoal" title="Add subgoal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </button>
+              <button class="icon-button" type="button" data-action="edit" aria-label="Edit goal" title="Edit goal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/></svg>
+              </button>
             </div>
           </div>
         </div>
@@ -362,7 +367,7 @@ function renderRoadmap() {
           <div class="detail-item"><span>Workstream</span><strong>${safeText(goal.category || "General")}</strong></div>
           <div class="detail-item"><span>Due</span><strong>${prettyDate(goal.dueDate)}</strong></div>
           <div class="detail-item"><span>Status</span><strong>${safeText(statusLabel(goal.status))}</strong></div>
-          <button class="button button-ghost" type="button" data-action="edit">Edit details</button>
+          <button class="button button-secondary" type="button" data-action="edit">Edit details</button>
         </div>
       </article>`;
 
@@ -384,10 +389,13 @@ function renderProgress() {
   els.overallPercent.textContent = `${percent}%`;
   els.progressSummary.textContent = `${completed} of ${total} goals complete`;
 
+  const dial = document.querySelector("#progressDial");
+  if (dial) dial.style.setProperty("--mission-progress", `${percent * 3.6}deg`);
+
   const next = goals
     .filter(g => g.status !== "done" && g.dueDate)
     .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
-  els.nextMilestone.textContent = next ? `Next milestone: ${next.title} • ${prettyDate(next.dueDate)}` : "All roadmap goals complete";
+  els.nextMilestone.textContent = next ? `Next: ${next.title} · ${prettyDate(next.dueDate)}` : "All roadmap goals complete";
 }
 
 function renderTimeRemaining() {
@@ -419,17 +427,42 @@ function renderStats() {
   const categories = new Set(goals.map(g => g.category).filter(Boolean)).size;
 
   const stats = [
-    [goals.length, "Total goals", "Every top-level goal and subgoal in the current roadmap."],
-    [done, "Complete", goals.length ? `${Math.round((done / goals.length) * 100)}% of the roadmap closed.` : "No goals yet."],
-    [active, "In progress", "Items the team has actively moved into execution."],
-    [blocked, "Blocked", `${categories} workstream${categories === 1 ? "" : "s"} represented across the roadmap.`]
+    {
+      value: goals.length,
+      label: "Total objectives",
+      note: `${categories} active workstream${categories === 1 ? "" : "s"} across the mission.`,
+      icon: '<path d="M5 6h14M5 12h14M5 18h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
+    },
+    {
+      value: done,
+      label: "Complete",
+      note: goals.length ? `${Math.round((done / goals.length) * 100)}% of the roadmap has been closed.` : "No goals yet.",
+      icon: '<path d="m5 12 4.2 4.2L19 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    },
+    {
+      value: active,
+      label: "In progress",
+      note: "Objectives currently moving through execution.",
+      icon: '<path d="M12 3a9 9 0 1 0 9 9M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+    },
+    {
+      value: blocked,
+      label: "Blocked",
+      note: blocked ? "Needs attention before downstream work can move." : "No blockers currently recorded.",
+      icon: '<path d="M12 8v5m0 3.2v.1M10.4 4.7 3.6 17a2 2 0 0 0 1.7 3h13.4a2 2 0 0 0 1.7-3L13.6 4.7a1.8 1.8 0 0 0-3.2 0Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>'
+    }
   ];
 
-  els.statsGrid.innerHTML = stats.map(([value, label, note]) => `
+  els.statsGrid.innerHTML = stats.map(stat => `
     <article class="stat-card">
-      <span class="stat-label">${safeText(label)}</span>
-      <strong class="stat-value">${safeText(value)}</strong>
-      <span class="stat-note">${safeText(note)}</span>
+      <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${stat.icon}</svg></div>
+      <div class="stat-top">
+        <div>
+          <span class="stat-label">${safeText(stat.label)}</span>
+          <strong class="stat-value">${safeText(stat.value)}</strong>
+        </div>
+      </div>
+      <span class="stat-note">${safeText(stat.note)}</span>
     </article>`).join("");
 }
 
@@ -668,6 +701,18 @@ window.addEventListener("storage", event => {
     goals = loadGoals();
     render();
     showToast("Roadmap refreshed from another tab");
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) {
+    event.preventDefault();
+    els.searchInput.focus();
+  }
+  if (event.key === "Escape" && els.goalDialog.open) closeGoalDialog();
+  if ((event.key === "Enter" || event.key === " ") && document.activeElement?.matches?.('[data-action="expand"]')) {
+    event.preventDefault();
+    document.activeElement.click();
   }
 });
 

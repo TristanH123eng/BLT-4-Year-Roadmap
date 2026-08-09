@@ -3,194 +3,264 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="BLT Rocketry Club roadmap toward a Liquid SpaceShot." />
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="BLT Rocketry Club mission roadmap toward a Liquid SpaceShot in April 2030." />
+  <meta name="theme-color" content="#080b12" />
   <title>BLT Rocketry — Liquid SpaceShot Roadmap</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="stars" aria-hidden="true"></div>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="grid-overlay" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="BLT Rocketry home">
-      <span class="brand-mark" aria-hidden="true">▲</span>
-      <span>
-        <strong>BLT</strong>
-        <small>Rocketry Club</small>
-      </span>
-    </a>
+  <header class="topbar">
+    <div class="topbar-inner shell">
+      <a class="brand" href="#top" aria-label="BLT Rocketry home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" role="img">
+            <path d="M16 3.4c5.5 4.8 8.4 10.2 8.4 16.1l-5.1-1.7L16 27l-3.3-9.2-5.1 1.7C7.6 13.6 10.5 8.2 16 3.4Z" fill="currentColor"/>
+            <circle cx="16" cy="12.1" r="2.25" fill="#080b12"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <strong>BLT Rocketry</strong>
+          <small>Liquid SpaceShot Program</small>
+        </span>
+      </a>
 
-    <div class="header-actions">
-      <button class="button button-ghost" id="exportBtn" type="button">Export</button>
-      <label class="button button-ghost file-button" for="importInput">Import</label>
-      <input id="importInput" type="file" accept="application/json" hidden />
-      <button class="button button-primary" id="addGoalTopBtn" type="button">+ Add goal</button>
+      <nav class="topbar-nav" aria-label="Primary navigation">
+        <a href="#roadmap-section">Roadmap</a>
+        <a href="#mission-health">Mission health</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="button button-secondary desktop-action" id="exportBtn" type="button" title="Export roadmap JSON">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 15v4h14v-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Export
+        </button>
+        <label class="button button-secondary file-button desktop-action" for="importInput" title="Import roadmap JSON">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m0 0 4 4m-4-4-4 4M5 9v10h14V9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Import
+        </label>
+        <input id="importInput" type="file" accept="application/json" hidden />
+        <button class="button button-primary" id="addGoalTopBtn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Add goal
+        </button>
+      </div>
     </div>
   </header>
 
   <main id="top">
-    <section class="hero shell">
-      <div class="eyebrow">BLT • Roadmap to April 2030</div>
-      <div class="hero-grid">
-        <div>
-          <h1>Liquid SpaceShot</h1>
-          <p class="hero-copy">
-            One shared roadmap from where BLT is today to a club-scale liquid rocket program capable of pursuing a SpaceShot attempt.
-            Break the mission into practical, editable milestones and keep the whole team aligned.
-          </p>
+    <section class="hero shell" aria-labelledby="mission-title">
+      <div class="mission-hero">
+        <div class="hero-copy-wrap">
+          <div class="mission-status"><span class="pulse-dot"></span> Mission roadmap active</div>
+          <p class="kicker">BLT // SPACE PROGRAM 01</p>
+          <h1 id="mission-title">Liquid <span>SpaceShot</span></h1>
+          <p class="hero-copy">A living four-year roadmap for the team, systems, testing, and integration needed to put BLT in position for an April 2030 SpaceShot attempt.</p>
 
-          <div class="hero-meta">
-            <div class="meta-card">
-              <span class="meta-label">Target date</span>
-              <strong id="targetDateLabel">April 2030</strong>
+          <div class="hero-actions">
+            <button class="button button-primary button-large" type="button" onclick="document.querySelector('#roadmap-section').scrollIntoView({behavior:'smooth'})">
+              View mission roadmap
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="target-chip">
+              <span class="target-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M6 3v3m12-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </span>
+              <span><small>Target window</small><strong id="targetDateLabel">April 2030</strong></span>
             </div>
-            <div class="meta-card">
-              <span class="meta-label">Time remaining</span>
+          </div>
+        </div>
+
+        <aside class="mission-panel" aria-label="Mission overview">
+          <div class="panel-header">
+            <span>Mission progress</span>
+            <span class="live-badge">LIVE</span>
+          </div>
+
+          <div class="progress-dial-wrap">
+            <div class="progress-dial" id="progressDial">
+              <div class="progress-dial-inner">
+                <strong id="overallPercent">0%</strong>
+                <span>complete</span>
+              </div>
+            </div>
+            <div class="progress-copy">
+              <span class="data-label">MISSION STATUS</span>
+              <strong id="progressSummary">0 of 0 goals complete</strong>
+              <span id="nextMilestone">Next milestone: —</span>
+            </div>
+          </div>
+
+          <div class="mission-divider"></div>
+
+          <div class="countdown-row">
+            <div>
+              <span class="data-label">TIME TO TARGET</span>
               <strong id="timeRemaining">—</strong>
             </div>
+            <div class="countdown-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 7v5l3 2m4.5-2A7.5 7.5 0 1 1 4.5 12a7.5 7.5 0 0 1 15 0Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
           </div>
-        </div>
 
-        <div class="mission-orbit" aria-label="Mission progress">
-          <div class="orbit orbit-one"></div>
-          <div class="orbit orbit-two"></div>
-          <div class="mission-core">
-            <span class="mission-percent" id="overallPercent">0%</span>
-            <span class="mission-label">Mission complete</span>
+          <div class="progress-track" aria-label="Overall mission progress">
+            <div class="progress-fill" id="overallProgress"></div>
           </div>
-          <span class="orbiter orbiter-one">BLT</span>
-          <span class="orbiter orbiter-two">2030</span>
-        </div>
-      </div>
-
-      <div class="progress-wrap" aria-label="Overall mission progress">
-        <div class="progress-track">
-          <div class="progress-fill" id="overallProgress"></div>
-        </div>
-        <div class="progress-caption">
-          <span id="progressSummary">0 of 0 goals complete</span>
-          <span id="nextMilestone">Next milestone: —</span>
-        </div>
+        </aside>
       </div>
     </section>
 
-    <section class="controls shell" aria-label="Roadmap controls">
-      <div class="search-wrap">
-        <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="m21 21-4.35-4.35m2.35-5.15A7.5 7.5 0 1 1 4 11.5a7.5 7.5 0 0 1 15 0Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        <input id="searchInput" type="search" placeholder="Search goals…" autocomplete="off" />
+    <section class="year-strip shell" aria-label="Program timeline">
+      <div class="year-strip-label">
+        <span>PROGRAM TIMELINE</span>
+        <small>2026 → 2030</small>
       </div>
-      <select id="statusFilter" aria-label="Filter by status">
-        <option value="all">All statuses</option>
-        <option value="todo">Not started</option>
-        <option value="in-progress">In progress</option>
-        <option value="blocked">Blocked</option>
-        <option value="done">Complete</option>
-      </select>
-      <select id="categoryFilter" aria-label="Filter by category">
-        <option value="all">All workstreams</option>
-      </select>
-      <button class="button button-ghost" id="expandAllBtn" type="button">Expand all</button>
+      <div class="year-rail" id="yearRail" aria-label="Roadmap years"></div>
     </section>
 
-    <section class="roadmap-section shell">
+    <section class="roadmap-section shell" id="roadmap-section">
       <div class="section-heading">
         <div>
-          <span class="eyebrow">Mission breakdown</span>
+          <span class="section-kicker">MISSION BREAKDOWN</span>
           <h2>Roadmap</h2>
+          <p>Turn the SpaceShot mission into editable, trackable goals. Expand a goal to inspect details or add nested milestones.</p>
         </div>
-        <p>Click a goal to expand it. Every item can be edited, completed, nested under another goal, or removed.</p>
+        <div class="section-heading-actions">
+          <button class="button button-secondary mobile-only" id="mobileExportBtn" type="button" onclick="document.querySelector('#exportBtn').click()">Export</button>
+          <label class="button button-secondary mobile-only" for="importInput">Import</label>
+        </div>
       </div>
 
-      <div class="year-rail" id="yearRail" aria-label="Roadmap years"></div>
-      <div id="roadmap" class="roadmap" aria-live="polite"></div>
-      <div id="emptyState" class="empty-state" hidden>
-        <h3>No goals match this view.</h3>
-        <p>Try changing your filters or add a new goal.</p>
+      <div class="controls" aria-label="Roadmap controls">
+        <div class="search-wrap">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.15A7.5 7.5 0 1 1 4 11.5a7.5 7.5 0 0 1 15 0Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <input id="searchInput" type="search" placeholder="Search roadmap…" autocomplete="off" />
+          <kbd>/</kbd>
+        </div>
+        <div class="filter-group">
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="all">All statuses</option>
+            <option value="todo">Not started</option>
+            <option value="in-progress">In progress</option>
+            <option value="blocked">Blocked</option>
+            <option value="done">Complete</option>
+          </select>
+          <select id="categoryFilter" aria-label="Filter by workstream">
+            <option value="all">All workstreams</option>
+          </select>
+          <button class="button button-secondary" id="expandAllBtn" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Expand all
+          </button>
+        </div>
+      </div>
+
+      <div class="roadmap-shell">
+        <div class="roadmap-shell-head">
+          <div><span class="status-dot"></span> Mission objectives</div>
+          <span>Click a card to expand</span>
+        </div>
+        <div id="roadmap" class="roadmap" aria-live="polite"></div>
+        <div id="emptyState" class="empty-state" hidden>
+          <div class="empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 5h16M7 12h10m-7 7h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>No goals match this view</h3>
+          <p>Try changing your filters or create a new roadmap item.</p>
+        </div>
       </div>
     </section>
 
-    <section class="dashboard shell">
+    <section class="dashboard shell" id="mission-health">
       <div class="section-heading compact">
         <div>
-          <span class="eyebrow">At a glance</span>
+          <span class="section-kicker">PROGRAM TELEMETRY</span>
           <h2>Mission health</h2>
         </div>
+        <p>A fast read on how the roadmap is moving.</p>
       </div>
       <div class="stats-grid" id="statsGrid"></div>
     </section>
 
-    <section class="notes shell">
-      <div>
-        <span class="eyebrow">How this site works</span>
-        <h2>Built for a club, not a database admin.</h2>
-      </div>
-      <div class="notes-grid">
-        <article>
-          <span class="note-number">01</span>
-          <h3>Edit freely</h3>
-          <p>Add, rename, reschedule, re-parent, complete, or delete any milestone directly in the browser.</p>
-        </article>
-        <article>
-          <span class="note-number">02</span>
-          <h3>Saved locally</h3>
-          <p>Your browser automatically saves changes with localStorage. Export JSON to share or back up the roadmap.</p>
-        </article>
-        <article>
-          <span class="note-number">03</span>
-          <h3>GitHub-ready</h3>
-          <p>No build tools or server are required. Push these files to GitHub and enable GitHub Pages.</p>
-        </article>
+    <section class="workflow shell">
+      <div class="workflow-card">
+        <div class="workflow-copy">
+          <span class="section-kicker">BUILT FOR THE TEAM</span>
+          <h2>Keep the roadmap alive.</h2>
+          <p>Update milestones during design reviews, export a backup before major changes, and keep the canonical version in your GitHub repository.</p>
+        </div>
+        <div class="workflow-points">
+          <div class="workflow-point">
+            <span>01</span>
+            <div><strong>Edit in seconds</strong><small>Dates, owners, status, nesting, and descriptions.</small></div>
+          </div>
+          <div class="workflow-point">
+            <span>02</span>
+            <div><strong>Saved automatically</strong><small>Changes persist locally in the browser.</small></div>
+          </div>
+          <div class="workflow-point">
+            <span>03</span>
+            <div><strong>Portable by design</strong><small>Export and import the complete roadmap as JSON.</small></div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer shell">
-    <div>
-      <strong>BLT Rocketry</strong>
-      <span>Build deliberately. Test carefully. Learn constantly.</span>
+    <div class="footer-brand">
+      <span class="brand-mark mini" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M16 3.4c5.5 4.8 8.4 10.2 8.4 16.1l-5.1-1.7L16 27l-3.3-9.2-5.1 1.7C7.6 13.6 10.5 8.2 16 3.4Z" fill="currentColor"/></svg>
+      </span>
+      <div><strong>BLT Rocketry</strong><small>Build deliberately · Test carefully · Learn constantly</small></div>
     </div>
-    <button class="text-button" id="resetBtn" type="button">Reset demo roadmap</button>
+    <button class="text-button" id="resetBtn" type="button">Reset starter roadmap</button>
   </footer>
 
   <dialog id="goalDialog" class="goal-dialog">
     <form id="goalForm" method="dialog">
       <div class="dialog-header">
         <div>
-          <span class="eyebrow" id="dialogEyebrow">Roadmap item</span>
+          <span class="section-kicker" id="dialogEyebrow">ROADMAP ITEM</span>
           <h2 id="dialogTitle">Add goal</h2>
         </div>
-        <button class="icon-button" id="closeDialogBtn" type="button" aria-label="Close">×</button>
+        <button class="icon-button close-button" id="closeDialogBtn" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
       </div>
 
       <input type="hidden" id="goalId" />
 
-      <label>
-        Goal title
+      <label class="field full-field">
+        <span>Goal title</span>
         <input id="goalTitle" required maxlength="100" placeholder="e.g. Complete subsystem design review" />
       </label>
 
-      <label>
-        Description
+      <label class="field full-field">
+        <span>Description</span>
         <textarea id="goalDescription" rows="4" maxlength="420" placeholder="What does success look like?"></textarea>
       </label>
 
       <div class="form-grid">
-        <label>
-          Workstream
+        <label class="field">
+          <span>Workstream</span>
           <input id="goalCategory" list="categoryOptions" maxlength="40" placeholder="e.g. Avionics" />
           <datalist id="categoryOptions"></datalist>
         </label>
 
-        <label>
-          Due date
+        <label class="field">
+          <span>Due date</span>
           <input id="goalDueDate" type="date" required />
         </label>
 
-        <label>
-          Status
+        <label class="field">
+          <span>Status</span>
           <select id="goalStatus">
             <option value="todo">Not started</option>
             <option value="in-progress">In progress</option>
@@ -199,8 +269,8 @@
           </select>
         </label>
 
-        <label>
-          Parent goal
+        <label class="field">
+          <span>Parent goal</span>
           <select id="goalParent">
             <option value="">Top-level goal</option>
           </select>
@@ -208,9 +278,9 @@
       </div>
 
       <div class="dialog-actions">
-        <button class="button button-danger" id="deleteGoalBtn" type="button" hidden>Delete</button>
+        <button class="button button-danger" id="deleteGoalBtn" type="button" hidden>Delete goal</button>
         <span class="dialog-spacer"></span>
-        <button class="button button-ghost" id="cancelDialogBtn" type="button">Cancel</button>
+        <button class="button button-secondary" id="cancelDialogBtn" type="button">Cancel</button>
         <button class="button button-primary" type="submit">Save goal</button>
       </div>
     </form>
