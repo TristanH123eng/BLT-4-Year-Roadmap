@@ -1,0 +1,104 @@
+# BLT Rocketry — Liquid SpaceShot Roadmap
+
+A static, GitHub Pages-ready roadmap website for **BLT Rocketry Club**, centered on a **Liquid SpaceShot target of April 2030**.
+
+## Features
+
+- Main April 2030 mission target with countdown and progress
+- Nested goals and subgoals
+- Add, edit, reschedule, re-parent, complete, block, and delete goals
+- Workstream and status filters
+- Search
+- Automatic overall progress calculation
+- Mission-health dashboard
+- Browser persistence using `localStorage`
+- JSON export/import for backup and sharing
+- Responsive mobile layout
+- No framework, database, package manager, or build step required
+- Works on GitHub Pages
+
+## Quick start
+
+Open `index.html` directly in a browser, or use a tiny local web server:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then visit `http://localhost:8000`.
+
+## Put it on GitHub Pages
+
+1. Create a new GitHub repository, for example `blt-roadmap`.
+2. Add all files in this folder to the repository.
+3. Commit and push them to the `main` branch.
+4. In GitHub, open **Settings → Pages**.
+5. Under **Build and deployment**, choose **Deploy from a branch**.
+6. Select the `main` branch and `/ (root)` folder, then save.
+7. GitHub will provide the public Pages URL after deployment.
+
+## Important data note
+
+Edits made in the website are saved to the current browser using `localStorage`. They do **not** automatically commit changes back to GitHub or sync between members.
+
+For a shared club workflow:
+
+1. One roadmap owner maintains the canonical roadmap.
+2. Use **Export** to download a JSON backup after major changes.
+3. Keep exported snapshots in the repository if desired.
+4. Other members can use **Import** to load that snapshot into their browser.
+
+If BLT later wants true multi-user syncing, authentication, and permissions, the static site can be upgraded to use a backend such as Supabase or Firebase.
+
+## Customize the starter roadmap
+
+The starter milestones are in `script.js` inside the `defaultGoals` array.
+
+Each goal has this shape:
+
+```js
+{
+  id: "unique-id",
+  title: "Goal title",
+  description: "What success looks like",
+  category: "Avionics",
+  dueDate: "2028-04-15",
+  status: "todo",
+  parentId: null
+}
+```
+
+Supported status values:
+
+- `todo`
+- `in-progress`
+- `blocked`
+- `done`
+
+To make a goal a subgoal, set `parentId` to the `id` of another goal.
+
+## Change the mission date
+
+In `script.js`, change:
+
+```js
+const TARGET_DATE = "2030-04-30";
+```
+
+The site currently displays the target as **April 2030** and uses April 30, 2030 as the countdown deadline until BLT selects a specific launch day. If you change it, also update the displayed date in `index.html` so the hero text matches.
+
+## Project structure
+
+```text
+blt-roadmap/
+├── index.html
+├── styles.css
+├── script.js
+├── README.md
+├── LICENSE
+└── .gitignore
+```
+
+## License
+
+MIT. See `LICENSE`.
