@@ -22,10 +22,10 @@
   --text: #f5f7fb;
   --text-soft: #c5ccd8;
   --muted: #7d8798;
-  --accent: #ff7a3d;
-  --accent-bright: #ff985f;
-  --accent-soft: rgba(255, 122, 61, 0.12);
-  --accent-line: rgba(255, 122, 61, 0.26);
+  --accent: #4f8cff;
+  --accent-bright: #75a7ff;
+  --accent-soft: rgba(79, 140, 255, 0.13);
+  --accent-line: rgba(79, 140, 255, 0.30);
   --green: #56d6a0;
   --yellow: #f4c75d;
   --red: #ff6b76;
@@ -77,8 +77,8 @@ svg { display: block; }
   opacity: .12;
   z-index: -2;
 }
-.ambient-one { background: #ff6f2d; top: -420px; left: -190px; }
-.ambient-two { background: #335cff; top: 130px; right: -500px; opacity: .08; }
+.ambient-one { background: var(--accent); top: -420px; left: -190px; opacity: .15; }
+.ambient-two { background: #22d3ee; top: 130px; right: -500px; opacity: .09; }
 .grid-overlay {
   position: fixed;
   inset: 0;
@@ -115,7 +115,7 @@ svg { display: block; }
   place-items: center;
   border: 1px solid var(--accent-line);
   border-radius: 11px;
-  background: linear-gradient(145deg, rgba(255,122,61,.17), rgba(255,122,61,.06));
+  background: linear-gradient(145deg, var(--accent-soft), rgba(79,140,255,.045));
   color: var(--accent-bright);
   box-shadow: inset 0 1px rgba(255,255,255,.08);
 }
@@ -149,11 +149,11 @@ svg { display: block; }
 .button svg { width: 16px; height: 16px; flex: 0 0 auto; }
 .button:hover { transform: translateY(-1px); }
 .button-primary {
-  background: linear-gradient(180deg, #ff864d, #f36b2d);
-  color: #160b06;
-  box-shadow: 0 8px 26px rgba(255, 112, 48, .18), inset 0 1px rgba(255,255,255,.24);
+  background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+  color: #ffffff;
+  box-shadow: 0 8px 28px var(--accent-soft), inset 0 1px rgba(255,255,255,.22);
 }
-.button-primary:hover { box-shadow: 0 10px 32px rgba(255, 112, 48, .28), inset 0 1px rgba(255,255,255,.24); }
+.button-primary:hover { box-shadow: 0 10px 34px var(--accent-soft), inset 0 1px rgba(255,255,255,.24); }
 .button-secondary {
   background: rgba(255,255,255,.045);
   border-color: var(--line);
@@ -191,8 +191,8 @@ svg { display: block; }
   left: -230px;
   bottom: -420px;
   border-radius: 50%;
-  border: 1px solid rgba(255,122,61,.18);
-  box-shadow: 0 0 0 80px rgba(255,122,61,.018), 0 0 0 160px rgba(255,122,61,.01);
+  border: 1px solid var(--accent-line);
+  box-shadow: 0 0 0 80px rgba(79,140,255,.020), 0 0 0 160px rgba(79,140,255,.010);
   pointer-events: none;
 }
 .mission-hero::after {
@@ -286,7 +286,7 @@ svg { display: block; }
   box-shadow: inset 0 1px rgba(255,255,255,.035);
 }
 .panel-header { display: flex; align-items: center; justify-content: space-between; color: #b8c0cc; font-size: 12px; font-weight: 700; }
-.live-badge { padding: 4px 7px; border-radius: 5px; background: rgba(255,122,61,.1); border: 1px solid rgba(255,122,61,.15); color: #ff9b6b; font-size: 8px; letter-spacing: .16em; }
+.live-badge { padding: 4px 7px; border-radius: 5px; background: var(--accent-soft); border: 1px solid var(--accent-line); color: var(--accent-bright); font-size: 8px; letter-spacing: .16em; }
 .progress-dial-wrap { display: grid; grid-template-columns: 126px 1fr; align-items: center; gap: 20px; margin: 28px 0 20px; }
 .progress-dial {
   --mission-progress: 0deg;
@@ -295,7 +295,7 @@ svg { display: block; }
   padding: 9px;
   border-radius: 50%;
   background: conic-gradient(var(--accent) var(--mission-progress), rgba(255,255,255,.07) 0);
-  box-shadow: 0 0 34px rgba(255,122,61,.08);
+  box-shadow: 0 0 34px var(--accent-soft);
 }
 .progress-dial-inner { width: 100%; height: 100%; display: grid; place-content: center; text-align: center; border-radius: 50%; background: #0d121b; border: 1px solid rgba(255,255,255,.04); }
 .progress-dial strong { font-family: var(--font-display); font-size: 30px; line-height: 1; letter-spacing: -.05em; }
@@ -310,7 +310,7 @@ svg { display: block; }
 .countdown-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; border: 1px solid var(--line); color: #909aaa; background: rgba(255,255,255,.025); }
 .countdown-icon svg { width: 18px; height: 18px; }
 .progress-track { height: 5px; margin-top: 22px; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.065); }
-.progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #f06a2d, #ff9a68); transition: width .45s ease; }
+.progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #73d1ff); transition: width .45s ease; }
 
 /* Timeline strip */
 .year-strip {
@@ -330,8 +330,8 @@ svg { display: block; }
 .year-rail { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
 .year-chip { position: relative; padding: 8px 12px; border-radius: 8px; color: #737d8d; font-family: var(--font-display); font-size: 11px; font-weight: 700; text-align: center; }
 .year-chip::after { content: ""; position: absolute; left: 50%; bottom: -3px; width: 4px; height: 4px; transform: translateX(-50%); border-radius: 50%; background: #353d4b; }
-.year-chip.current { color: #ffd1ba; background: rgba(255,122,61,.09); }
-.year-chip.current::after { background: var(--accent); box-shadow: 0 0 0 4px rgba(255,122,61,.08); }
+.year-chip.current { color: #cfe0ff; background: var(--accent-soft); }
+.year-chip.current::after { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
 
 /* Section headings */
 .roadmap-section, .dashboard, .workflow { padding-top: 92px; }
@@ -356,7 +356,7 @@ svg { display: block; }
 }
 .search-wrap input { height: 44px; padding: 0 45px 0 42px; border-radius: 11px; }
 .search-wrap input::placeholder, .field input::placeholder, .field textarea::placeholder { color: #5d6674; }
-.search-wrap input:focus, .controls select:focus, .field input:focus, .field select:focus, .field textarea:focus { border-color: rgba(255,122,61,.42); box-shadow: 0 0 0 3px rgba(255,122,61,.07); background: rgba(18,24,36,.9); }
+.search-wrap input:focus, .controls select:focus, .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); background: rgba(18,24,36,.9); }
 .search-wrap kbd { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); padding: 3px 6px; border: 1px solid var(--line); border-radius: 5px; color: #626c7b; background: rgba(255,255,255,.025); font-family: inherit; font-size: 10px; }
 .filter-group { display: flex; gap: 9px; }
 .controls select { width: auto; min-width: 144px; height: 44px; padding: 0 34px 0 13px; border-radius: 11px; color: #aeb6c3; }
@@ -495,14 +495,14 @@ svg { display: block; }
   overflow: hidden;
   border: 1px solid var(--accent-line);
   border-radius: 22px;
-  background: linear-gradient(130deg, rgba(255,122,61,.075), rgba(255,255,255,.018) 42%, rgba(255,255,255,.01));
+  background: linear-gradient(130deg, var(--accent-soft), rgba(255,255,255,.018) 42%, rgba(255,255,255,.01));
 }
-.workflow-card::after { content: ""; position: absolute; width: 260px; height: 260px; right: -140px; bottom: -180px; border-radius: 50%; border: 1px solid rgba(255,122,61,.12); box-shadow: 0 0 0 50px rgba(255,122,61,.018), 0 0 0 100px rgba(255,122,61,.009); }
+.workflow-card::after { content: ""; position: absolute; width: 260px; height: 260px; right: -140px; bottom: -180px; border-radius: 50%; border: 1px solid var(--accent-line); box-shadow: 0 0 0 50px rgba(79,140,255,.018), 0 0 0 100px rgba(79,140,255,.009); }
 .workflow-copy h2 { margin: 8px 0 12px; font-family: var(--font-display); font-size: 32px; letter-spacing: -.045em; }
 .workflow-copy p { margin: 0; color: #838d9d; line-height: 1.65; }
 .workflow-points { display: grid; gap: 10px; position: relative; z-index: 1; }
 .workflow-point { display: grid; grid-template-columns: 42px 1fr; gap: 14px; align-items: center; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: rgba(7,10,16,.26); }
-.workflow-point > span { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px; background: rgba(255,122,61,.08); color: #ff9b6b; font-family: var(--font-display); font-size: 10px; font-weight: 700; }
+.workflow-point > span { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px; background: var(--accent-soft); color: var(--accent-bright); font-family: var(--font-display); font-size: 10px; font-weight: 700; }
 .workflow-point div { display: grid; gap: 2px; }
 .workflow-point strong { color: #d9dee7; font-size: 12px; }
 .workflow-point small { color: #697382; font-size: 10px; }
@@ -513,6 +513,38 @@ svg { display: block; }
 .footer-brand > div { display: grid; gap: 2px; }
 .footer-brand strong { font-family: var(--font-display); font-size: 12px; }
 .footer-brand small { color: #596371; font-size: 10px; }
+
+/* Appearance customization */
+.appearance-dialog {
+  width: min(620px, calc(100% - 28px));
+  max-height: min(760px, calc(100vh - 34px));
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  background: #101620;
+  color: var(--text);
+  box-shadow: 0 36px 120px rgba(0,0,0,.62);
+}
+.appearance-dialog::backdrop { background: rgba(2,4,8,.75); backdrop-filter: blur(8px); }
+.appearance-dialog-inner { padding: 25px; }
+.appearance-copy { margin: -10px 0 22px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.appearance-section { padding: 16px 0; border-top: 1px solid var(--line); }
+.appearance-section:first-of-type { border-top: 0; padding-top: 0; }
+.appearance-section-head { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:12px; }
+.appearance-section-head strong { font-family: var(--font-display); font-size: 13px; }
+.appearance-section-head small { color: var(--muted); font-size: 10px; }
+.color-row { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:48px; padding:8px 10px; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.02); }
+.color-row + .color-row { margin-top:8px; }
+.color-row-label { display:flex; align-items:center; gap:10px; min-width:0; }
+.color-preview { width:10px; height:10px; border-radius:50%; background:var(--swatch); box-shadow:0 0 12px color-mix(in srgb, var(--swatch) 50%, transparent); flex:0 0 auto; }
+.color-row strong { font-size:12px; color:#cfd5df; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.color-input-wrap { display:flex; align-items:center; gap:8px; }
+.color-input-wrap code { color:#778292; font-size:10px; }
+.color-input { width:38px; height:30px; padding:2px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.035); }
+.color-input::-webkit-color-swatch-wrapper { padding:2px; }
+.color-input::-webkit-color-swatch { border:0; border-radius:5px; }
+.appearance-actions { display:flex; align-items:center; gap:9px; margin-top:18px; padding-top:18px; border-top:1px solid var(--line); }
 
 /* Dialog */
 .goal-dialog {
@@ -673,6 +705,10 @@ svg { display: block; }
           Import
         </label>
         <input id="importInput" type="file" accept="application/json" hidden />
+        <button class="button button-secondary desktop-action" id="appearanceBtn" type="button" title="Customize colors">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a1.8 1.8 0 0 0 0-3.6h-.7a1.5 1.5 0 0 1 0-3h2.2A6.3 6.3 0 0 0 21 8.1C21 5.3 17 3 12 3Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="9" r="1" fill="currentColor"/><circle cx="10" cy="6.5" r="1" fill="currentColor"/><circle cx="14" cy="6.5" r="1" fill="currentColor"/><circle cx="16.5" cy="9" r="1" fill="currentColor"/></svg>
+          Appearance
+        </button>
         <button class="button button-primary" id="addGoalTopBtn" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Add goal
@@ -761,6 +797,7 @@ svg { display: block; }
         <div class="section-heading-actions">
           <button class="button button-secondary mobile-only" id="mobileExportBtn" type="button" onclick="document.querySelector('#exportBtn').click()">Export</button>
           <label class="button button-secondary mobile-only" for="importInput">Import</label>
+          <button class="button button-secondary mobile-only" type="button" onclick="document.querySelector('#appearanceBtn').click()">Colors</button>
         </div>
       </div>
 
@@ -850,6 +887,37 @@ svg { display: block; }
     <button class="text-button" id="resetBtn" type="button">Reset starter roadmap</button>
   </footer>
 
+  <dialog id="appearanceDialog" class="appearance-dialog">
+    <div class="appearance-dialog-inner">
+      <div class="dialog-header">
+        <div>
+          <span class="section-kicker">WORKSPACE APPEARANCE</span>
+          <h2>Customize colors</h2>
+        </div>
+        <button class="icon-button close-button" id="closeAppearanceBtn" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <p class="appearance-copy">Choose the interface accent and the dot/icon color used for each workstream. Changes are applied instantly and saved on this device.</p>
+      <div class="appearance-section">
+        <div class="appearance-section-head"><strong>Interface accent</strong><small>Buttons, progress, active states</small></div>
+        <div class="color-row" id="accentColorRow">
+          <div class="color-row-label"><span class="color-preview" id="accentPreview"></span><strong>BLT accent</strong></div>
+          <div class="color-input-wrap"><code id="accentHex"></code><input class="color-input" id="accentColorInput" type="color" aria-label="Interface accent color" /></div>
+        </div>
+      </div>
+      <div class="appearance-section">
+        <div class="appearance-section-head"><strong>Workstream colors</strong><small>Roadmap category dots and highlights</small></div>
+        <div id="workstreamColorList"></div>
+      </div>
+      <div class="appearance-actions">
+        <button class="button button-secondary" id="resetColorsBtn" type="button">Reset colors</button>
+        <span class="dialog-spacer"></span>
+        <button class="button button-primary" id="doneAppearanceBtn" type="button">Done</button>
+      </div>
+    </div>
+  </dialog>
+
   <dialog id="goalDialog" class="goal-dialog">
     <form id="goalForm" method="dialog">
       <div class="dialog-header">
@@ -917,7 +985,9 @@ svg { display: block; }
 
   <script>
 const STORAGE_KEY = "blt-roadmap-v1";
+const SETTINGS_KEY = "blt-roadmap-settings-v1";
 const TARGET_DATE = "2030-04-30";
+const DEFAULT_ACCENT = "#4f8cff";
 
 const defaultGoals = [
   {
@@ -1093,17 +1163,19 @@ const defaultGoals = [
   }
 ];
 
-const categoryColors = {
-  Program: "#ff7144",
-  Propulsion: "#ffb65c",
-  Structures: "#8d9eff",
-  Avionics: "#60c8ff",
-  Operations: "#a58cff",
-  Integration: "#61d6a4",
-  "Flight Test": "#ff84b7",
-  Mission: "#ffd166"
+const defaultCategoryColors = {
+  Program: "#4f8cff",
+  Propulsion: "#f59e0b",
+  Structures: "#60a5fa",
+  Avionics: "#22d3ee",
+  Operations: "#818cf8",
+  Integration: "#34d399",
+  "Flight Test": "#a78bfa",
+  Mission: "#38bdf8"
 };
 
+let appearance = loadAppearance();
+let categoryColors = { ...defaultCategoryColors, ...(appearance.categoryColors || {}) };
 let goals = loadGoals();
 let filters = { search: "", status: "all", category: "all" };
 let expanded = new Set();
@@ -1124,6 +1196,16 @@ const els = {
   addGoalTopBtn: document.querySelector("#addGoalTopBtn"),
   exportBtn: document.querySelector("#exportBtn"),
   importInput: document.querySelector("#importInput"),
+  appearanceBtn: document.querySelector("#appearanceBtn"),
+  appearanceDialog: document.querySelector("#appearanceDialog"),
+  closeAppearanceBtn: document.querySelector("#closeAppearanceBtn"),
+  doneAppearanceBtn: document.querySelector("#doneAppearanceBtn"),
+  resetColorsBtn: document.querySelector("#resetColorsBtn"),
+  accentColorInput: document.querySelector("#accentColorInput"),
+  accentPreview: document.querySelector("#accentPreview"),
+  accentHex: document.querySelector("#accentHex"),
+  accentColorRow: document.querySelector("#accentColorRow"),
+  workstreamColorList: document.querySelector("#workstreamColorList"),
   expandAllBtn: document.querySelector("#expandAllBtn"),
   resetBtn: document.querySelector("#resetBtn"),
   goalDialog: document.querySelector("#goalDialog"),
@@ -1143,6 +1225,81 @@ const els = {
   categoryOptions: document.querySelector("#categoryOptions"),
   toast: document.querySelector("#toast")
 };
+
+function loadAppearance() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+    return {
+      accent: /^#[0-9a-f]{6}$/i.test(saved?.accent || "") ? saved.accent : DEFAULT_ACCENT,
+      categoryColors: saved?.categoryColors && typeof saved.categoryColors === "object" ? saved.categoryColors : {}
+    };
+  } catch {
+    return { accent: DEFAULT_ACCENT, categoryColors: {} };
+  }
+}
+
+function hexToRgba(hex, alpha) {
+  const clean = String(hex).replace("#", "");
+  const value = parseInt(clean, 16);
+  const r = (value >> 16) & 255;
+  const g = (value >> 8) & 255;
+  const b = value & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function lightenHex(hex, amount = 34) {
+  const clean = String(hex).replace("#", "");
+  const value = parseInt(clean, 16);
+  const r = Math.min(255, ((value >> 16) & 255) + amount);
+  const g = Math.min(255, ((value >> 8) & 255) + amount);
+  const b = Math.min(255, (value & 255) + amount);
+  return `#${[r,g,b].map(v => v.toString(16).padStart(2,"0")).join("")}`;
+}
+
+function applyAppearance() {
+  const root = document.documentElement;
+  const accent = appearance.accent || DEFAULT_ACCENT;
+  root.style.setProperty("--accent", accent);
+  root.style.setProperty("--accent-bright", lightenHex(accent, 34));
+  root.style.setProperty("--accent-soft", hexToRgba(accent, .13));
+  root.style.setProperty("--accent-line", hexToRgba(accent, .30));
+  categoryColors = { ...defaultCategoryColors, ...(appearance.categoryColors || {}) };
+}
+
+function saveAppearance(message) {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(appearance));
+  applyAppearance();
+  renderRoadmap();
+  if (message) showToast(message);
+}
+
+function getWorkstreamNames() {
+  return [...new Set([...Object.keys(defaultCategoryColors), ...goals.map(g => g.category).filter(Boolean)])].sort();
+}
+
+function renderAppearanceControls() {
+  const accent = appearance.accent || DEFAULT_ACCENT;
+  els.accentColorInput.value = accent;
+  els.accentHex.textContent = accent.toUpperCase();
+  els.accentPreview.style.setProperty("--swatch", accent);
+  els.accentColorRow.style.setProperty("--swatch", accent);
+  els.workstreamColorList.innerHTML = getWorkstreamNames().map(name => {
+    const color = categoryColors[name] || DEFAULT_ACCENT;
+    return `<div class="color-row" style="--swatch:${safeText(color)}">
+      <div class="color-row-label"><span class="color-preview"></span><strong>${safeText(name)}</strong></div>
+      <div class="color-input-wrap"><code>${safeText(color.toUpperCase())}</code><input class="color-input" type="color" value="${safeText(color)}" data-workstream-color="${safeText(name)}" aria-label="${safeText(name)} color" /></div>
+    </div>`;
+  }).join("");
+}
+
+function openAppearanceDialog() {
+  renderAppearanceControls();
+  els.appearanceDialog.showModal();
+}
+
+function closeAppearanceDialog() {
+  els.appearanceDialog.close();
+}
 
 function loadGoals() {
   try {
@@ -1251,7 +1408,7 @@ function renderRoadmap() {
     const depth = goalDepth(goal);
     const children = getChildren(goal.id);
     const isExpanded = expanded.has(goal.id) || filters.search || filters.status !== "all" || filters.category !== "all";
-    const color = categoryColors[goal.category] || "#ff7a3d";
+    const color = categoryColors[goal.category] || appearance.accent || DEFAULT_ACCENT;
     const childLabel = children.length ? `${children.length} subgoal${children.length === 1 ? "" : "s"}` : "";
 
     html += `
@@ -1516,6 +1673,7 @@ function exportRoadmap() {
     mission: "Liquid SpaceShot",
     targetDate: TARGET_DATE,
     exportedAt: new Date().toISOString(),
+    appearance: { accent: appearance.accent, categoryColors },
     goals
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
@@ -1535,6 +1693,14 @@ function importRoadmap(file) {
   reader.onload = () => {
     try {
       const data = JSON.parse(reader.result);
+      if (!Array.isArray(data) && data.appearance) {
+        appearance = {
+          accent: /^#[0-9a-f]{6}$/i.test(data.appearance.accent || "") ? data.appearance.accent : appearance.accent,
+          categoryColors: data.appearance.categoryColors && typeof data.appearance.categoryColors === "object" ? data.appearance.categoryColors : appearance.categoryColors
+        };
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(appearance));
+        applyAppearance();
+      }
       const importedGoals = Array.isArray(data) ? data : data.goals;
       if (!Array.isArray(importedGoals)) throw new Error("No goals array found");
 
@@ -1586,6 +1752,26 @@ els.categoryFilter.addEventListener("change", event => {
 });
 
 els.addGoalTopBtn.addEventListener("click", () => openGoalDialog());
+els.appearanceBtn.addEventListener("click", openAppearanceDialog);
+els.closeAppearanceBtn.addEventListener("click", closeAppearanceDialog);
+els.doneAppearanceBtn.addEventListener("click", closeAppearanceDialog);
+els.resetColorsBtn.addEventListener("click", () => {
+  appearance = { accent: DEFAULT_ACCENT, categoryColors: {} };
+  saveAppearance("Colors reset");
+  renderAppearanceControls();
+});
+els.accentColorInput.addEventListener("input", event => {
+  appearance.accent = event.target.value;
+  saveAppearance();
+  renderAppearanceControls();
+});
+els.workstreamColorList.addEventListener("input", event => {
+  const input = event.target.closest("[data-workstream-color]");
+  if (!input) return;
+  appearance.categoryColors = { ...(appearance.categoryColors || {}), [input.dataset.workstreamColor]: input.value };
+  saveAppearance();
+  renderAppearanceControls();
+});
 els.goalForm.addEventListener("submit", handleGoalSubmit);
 els.closeDialogBtn.addEventListener("click", closeGoalDialog);
 els.cancelDialogBtn.addEventListener("click", closeGoalDialog);
@@ -1614,6 +1800,10 @@ els.goalDialog.addEventListener("click", event => {
   if (event.target === els.goalDialog) closeGoalDialog();
 });
 
+els.appearanceDialog.addEventListener("click", event => {
+  if (event.target === els.appearanceDialog) closeAppearanceDialog();
+});
+
 window.addEventListener("storage", event => {
   if (event.key === STORAGE_KEY) {
     goals = loadGoals();
@@ -1628,12 +1818,14 @@ document.addEventListener("keydown", event => {
     els.searchInput.focus();
   }
   if (event.key === "Escape" && els.goalDialog.open) closeGoalDialog();
+  if (event.key === "Escape" && els.appearanceDialog.open) closeAppearanceDialog();
   if ((event.key === "Enter" || event.key === " ") && document.activeElement?.matches?.('[data-action="expand"]')) {
     event.preventDefault();
     document.activeElement.click();
   }
 });
 
+applyAppearance();
 render();
 
   </script>
