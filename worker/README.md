@@ -1,6 +1,4 @@
-# BLT Roadmap Sync Worker
-
-Use this folder as the Cloudflare Workers Builds root directory.
+# BLT Roadmap Worker
 
 Cloudflare Git build settings:
 - Root directory: `worker`
@@ -8,10 +6,9 @@ Cloudflare Git build settings:
 - Deploy command: `npx wrangler deploy`
 - Production branch: `main`
 
-The Worker name in Cloudflare must be `blt-roadmap-sync` (or change `name` in `wrangler.jsonc` to exactly match the Cloudflare Worker name).
-
-The non-secret GitHub/repository settings are already configured in `wrangler.jsonc`.
-
-Add these in Cloudflare as encrypted Secrets, never commit their values to GitHub:
+Runtime secrets required in Cloudflare:
 - `GITHUB_TOKEN`
 - `BLT_SYNC_KEY`
+- `SITE_PASSWORD`
+
+`SITE_PASSWORD` is the password BLT members enter on the website. Never commit any of these secret values to GitHub.
