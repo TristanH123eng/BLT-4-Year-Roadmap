@@ -1,5 +1,5 @@
 const GITHUB_API_VERSION = "2026-03-10";
-const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
+const SESSION_TTL_MS = 12 * 60 * 60 * 1000
 
 export default {
   async fetch(request, env) {
