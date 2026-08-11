@@ -719,16 +719,101 @@ svg { display: block; }
   .dialog-actions .button-danger { order: 3; width: 100%; }
 }
 
+
+/* Password gate */
+body.auth-locked { overflow: hidden; }
+body.auth-locked > .topbar,
+body.auth-locked > main,
+body.auth-locked > footer { display: none !important; }
+.auth-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(79,140,255,.14), transparent 34%),
+    rgba(5,8,14,.96);
+  backdrop-filter: blur(18px);
+}
+.auth-gate[hidden] { display: none; }
+.auth-card {
+  width: min(440px, 100%);
+  padding: 32px;
+  border: 1px solid var(--line-strong);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(18,25,38,.97), rgba(10,15,24,.97));
+  box-shadow: 0 34px 100px rgba(0,0,0,.55), inset 0 1px rgba(255,255,255,.045);
+}
+.auth-brand { display: flex; align-items: center; gap: 13px; margin-bottom: 28px; }
+.auth-brand .brand-mark { flex: 0 0 auto; }
+.auth-brand-copy { display: grid; gap: 2px; }
+.auth-brand-copy strong { font-family: var(--font-display); font-size: 16px; }
+.auth-brand-copy span { color: var(--muted); font-size: 11px; }
+.auth-kicker { color: var(--accent-bright); font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.auth-card h1 { margin: 9px 0 10px; font-family: var(--font-display); font-size: 34px; letter-spacing: -.045em; }
+.auth-copy { margin: 0 0 24px; color: #8f99a9; line-height: 1.65; font-size: 13px; }
+.auth-field { display: grid; gap: 7px; margin-top: 14px; }
+.auth-field > span { color: #aeb7c5; font-size: 11px; font-weight: 700; }
+.auth-field input {
+  width: 100%; height: 46px; padding: 0 13px;
+  border: 1px solid var(--line); border-radius: 11px; outline: none;
+  color: var(--text); background: rgba(255,255,255,.035);
+}
+.auth-field input:focus { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+.auth-service-row { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.auth-service-row[hidden] { display: none; }
+.auth-service-row small { display: block; margin-top: 6px; color: #667181; font-size: 10px; line-height: 1.5; }
+.auth-submit { width: 100%; margin-top: 18px; }
+.auth-error { min-height: 18px; margin-top: 10px; color: #ff8f99; font-size: 11px; text-align: center; }
+.auth-security { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); color: #626d7d; font-size: 10px; line-height: 1.55; text-align: center; }
+.lock-button { min-width: 40px; padding-inline: 11px; }
+.lock-button svg { width: 15px; height: 15px; }
+@media (max-width: 520px) {
+  .auth-card { padding: 24px; border-radius: 20px; }
+  .auth-card h1 { font-size: 29px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
 }
 
   </style>
 </head>
-<body>
+<body class="auth-locked">
   <div class="ambient ambient-one" aria-hidden="true"></div>
   <div class="ambient ambient-two" aria-hidden="true"></div>
   <div class="grid-overlay" aria-hidden="true"></div>
+
+
+  <section class="auth-gate" id="authGate" aria-labelledby="authTitle">
+    <form class="auth-card" id="authForm">
+      <div class="auth-brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M16 3.4c5.5 4.8 8.4 10.2 8.4 16.1l-5.1-1.7L16 27l-3.3-9.2-5.1 1.7C7.6 13.6 10.5 8.2 16 3.4Z" fill="currentColor"/><circle cx="16" cy="12.1" r="2.25" fill="#080b12"/></svg>
+        </span>
+        <div class="auth-brand-copy"><strong>BLT Rocketry</strong><span>Liquid SpaceShot Program</span></div>
+      </div>
+      <span class="auth-kicker">Protected workspace</span>
+      <h1 id="authTitle">Enter roadmap</h1>
+      <p class="auth-copy">This BLT workspace is password protected. Enter the club password to open the mission roadmap.</p>
+      <label class="auth-field">
+        <span>Workspace password</span>
+        <input id="authPassword" type="password" autocomplete="current-password" required placeholder="Enter password" />
+      </label>
+      <div class="auth-service-row" id="authServiceRow" hidden>
+        <label class="auth-field">
+          <span>BLT sync service URL</span>
+          <input id="authWorkerUrl" type="url" autocomplete="url" placeholder="https://blt-roadmap-sync.your-subdomain.workers.dev" />
+        </label>
+        <small>This is only needed the first time on a new browser. Use the same Cloudflare Worker URL used for GitHub sync.</small>
+      </div>
+      <button class="button button-primary button-large auth-submit" id="authSubmit" type="submit">Unlock roadmap</button>
+      <div class="auth-error" id="authError" role="alert" aria-live="polite"></div>
+      <div class="auth-security">The password is checked by the BLT Cloudflare Worker and is not stored in this page.</div>
+    </form>
+  </section>
 
   <header class="topbar">
     <div class="topbar-inner shell">
@@ -767,6 +852,10 @@ svg { display: block; }
         <button class="button button-secondary desktop-action" id="appearanceBtn" type="button" title="Customize colors">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a1.8 1.8 0 0 0 0-3.6h-.7a1.5 1.5 0 0 1 0-3h2.2A6.3 6.3 0 0 0 21 8.1C21 5.3 17 3 12 3Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="9" r="1" fill="currentColor"/><circle cx="10" cy="6.5" r="1" fill="currentColor"/><circle cx="14" cy="6.5" r="1" fill="currentColor"/><circle cx="16.5" cy="9" r="1" fill="currentColor"/></svg>
           Appearance
+        </button>
+        <button class="button button-secondary desktop-action lock-button" id="lockWorkspaceBtn" type="button" title="Lock workspace">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3M6 10h12a1 1 0 0 1 1 1v9H5v-9a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Lock
         </button>
         <button class="button button-primary" id="addGoalTopBtn" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -858,6 +947,7 @@ svg { display: block; }
           <label class="button button-secondary mobile-only" for="importInput">Import</label>
           <button class="button button-secondary mobile-only" type="button" onclick="document.querySelector('#appearanceBtn').click()">Colors</button>
           <button class="button button-secondary mobile-only" type="button" onclick="document.querySelector('#syncStatusBtn').click()">Sync</button>
+          <button class="button button-secondary mobile-only" type="button" onclick="lockWorkspace(true)">Lock</button>
         </div>
       </div>
 
@@ -1087,6 +1177,7 @@ const STORAGE_KEY = "blt-roadmap-v1";
 const SETTINGS_KEY = "blt-roadmap-settings-v1";
 const SYNC_SETTINGS_KEY = "blt-roadmap-sync-v1";
 const REMOTE_CACHE_KEY = "blt-roadmap-remote-cache-v1";
+const AUTH_TOKEN_KEY = "blt-roadmap-auth-token-v1";
 const TARGET_DATE = "2030-04-30";
 const DEFAULT_ACCENT = "#4f8cff";
 
@@ -1304,6 +1395,14 @@ const els = {
   appearanceBtn: document.querySelector("#appearanceBtn"),
   syncStatusBtn: document.querySelector("#syncStatusBtn"),
   syncStatusText: document.querySelector("#syncStatusText"),
+  authGate: document.querySelector("#authGate"),
+  authForm: document.querySelector("#authForm"),
+  authPassword: document.querySelector("#authPassword"),
+  authWorkerUrl: document.querySelector("#authWorkerUrl"),
+  authServiceRow: document.querySelector("#authServiceRow"),
+  authSubmit: document.querySelector("#authSubmit"),
+  authError: document.querySelector("#authError"),
+  lockWorkspaceBtn: document.querySelector("#lockWorkspaceBtn"),
   syncDialog: document.querySelector("#syncDialog"),
   closeSyncBtn: document.querySelector("#closeSyncBtn"),
   syncWorkerUrl: document.querySelector("#syncWorkerUrl"),
@@ -1378,6 +1477,107 @@ function setSyncStatus(state, text) {
   els.syncStatusBtn.title = state === "error" ? "GitHub sync failed — click for settings" : "GitHub sync settings";
 }
 
+
+function getAuthToken() {
+  return sessionStorage.getItem(AUTH_TOKEN_KEY) || "";
+}
+
+function authHeaders(extra = {}) {
+  const token = getAuthToken();
+  return token ? { ...extra, "Authorization": `Bearer ${token}` } : { ...extra };
+}
+
+function showAuthGate(message = "") {
+  document.body.classList.add("auth-locked");
+  els.authGate.hidden = false;
+  els.authError.textContent = message;
+  const savedWorker = normalizeWorkerUrl(syncSettings.workerUrl);
+  els.authWorkerUrl.value = savedWorker;
+  els.authServiceRow.hidden = Boolean(savedWorker);
+  els.authPassword.value = "";
+  setTimeout(() => els.authPassword.focus(), 30);
+}
+
+function unlockWorkspace(token = "") {
+  if (token) sessionStorage.setItem(AUTH_TOKEN_KEY, token);
+  els.authGate.hidden = true;
+  document.body.classList.remove("auth-locked");
+}
+
+function lockWorkspace(showMessage = false) {
+  sessionStorage.removeItem(AUTH_TOKEN_KEY);
+  showAuthGate(showMessage ? "Workspace locked." : "");
+}
+
+async function loginWorkspace(event) {
+  event?.preventDefault?.();
+  const workerUrl = normalizeWorkerUrl(syncSettings.workerUrl || els.authWorkerUrl.value);
+  const password = els.authPassword.value;
+  if (!workerUrl) {
+    els.authServiceRow.hidden = false;
+    els.authError.textContent = "Enter the BLT sync service URL.";
+    els.authWorkerUrl.focus();
+    return;
+  }
+  if (!password) return;
+
+  els.authSubmit.disabled = true;
+  const oldText = els.authSubmit.textContent;
+  els.authSubmit.textContent = "Checking…";
+  els.authError.textContent = "";
+  try {
+    const response = await fetch(`${workerUrl}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.token) throw new Error(result.error || `Login failed (${response.status})`);
+
+    if (workerUrl !== normalizeWorkerUrl(syncSettings.workerUrl)) {
+      syncSettings = { ...syncSettings, workerUrl };
+      localStorage.setItem(SYNC_SETTINGS_KEY, JSON.stringify(syncSettings));
+    }
+    unlockWorkspace(result.token);
+    setSyncStatus(syncConfigured() ? "ready" : "local");
+    await initializeSharedRoadmap();
+  } catch (error) {
+    console.error("Workspace login error", error);
+    els.authError.textContent = error.message === "Invalid password" ? "Incorrect password." : `Could not unlock: ${error.message}`;
+    els.authPassword.select();
+  } finally {
+    els.authSubmit.disabled = false;
+    els.authSubmit.textContent = oldText;
+  }
+}
+
+async function initializeAuth() {
+  const workerUrl = normalizeWorkerUrl(syncSettings.workerUrl);
+  const token = getAuthToken();
+  if (!workerUrl) {
+    showAuthGate();
+    els.authServiceRow.hidden = false;
+    return;
+  }
+  if (!token) {
+    showAuthGate();
+    return;
+  }
+  try {
+    const response = await fetch(`${workerUrl}/auth/check?t=${Date.now()}`, {
+      method: "GET",
+      headers: authHeaders(),
+      cache: "no-store"
+    });
+    if (!response.ok) throw new Error("Session expired");
+    unlockWorkspace();
+    await initializeSharedRoadmap();
+  } catch {
+    sessionStorage.removeItem(AUTH_TOKEN_KEY);
+    showAuthGate("Your session expired. Enter the password again.");
+  }
+}
+
 function buildSharedPayload() {
   return {
     schemaVersion: 1,
@@ -1446,13 +1646,17 @@ async function pushToGithub({ silent = false } = {}) {
   try {
     const response = await fetch(`${normalizeWorkerUrl(syncSettings.workerUrl)}/roadmap`, {
       method: "PUT",
-      headers: {
+      headers: authHeaders({
         "Content-Type": "application/json",
         "X-BLT-Sync-Key": syncSettings.workspaceKey
-      },
+      }),
       body: JSON.stringify(buildSharedPayload())
     });
     const result = await response.json().catch(() => ({}));
+    if (response.status === 401 && result.error === "Authentication required") {
+      lockWorkspace(false);
+      throw new Error("Session expired — unlock the roadmap again");
+    }
     if (!response.ok) throw new Error(result.error || `Sync failed (${response.status})`);
     lastSyncAt = new Date();
     localStorage.setItem(REMOTE_CACHE_KEY, "1");
@@ -1475,8 +1679,12 @@ async function pullFromGithub({ silent = false, allowPublicFallback = true } = {
   if (!url) return false;
   try {
     if (worker) setSyncStatus("syncing", "Pulling…");
-    const response = await fetch(url, { method: "GET", cache: "no-store" });
+    const response = await fetch(url, { method: "GET", cache: "no-store", headers: worker ? authHeaders() : {} });
     if (!response.ok) {
+      if (response.status === 401 && worker) {
+        lockWorkspace(false);
+        throw new Error("Session expired — unlock the roadmap again");
+      }
       if (response.status === 404) {
         if (worker) setSyncStatus(syncConfigured() ? "ready" : "local", worker ? "Ready — no remote file yet" : "Local only");
         return false;
@@ -2033,6 +2241,10 @@ function resetRoadmap() {
   saveGoals("Starter roadmap restored");
 }
 
+
+els.authForm.addEventListener("submit", loginWorkspace);
+els.lockWorkspaceBtn.addEventListener("click", () => lockWorkspace(true));
+
 els.searchInput.addEventListener("input", event => {
   filters.search = event.target.value;
   renderRoadmap();
@@ -2143,11 +2355,7 @@ document.addEventListener("keydown", event => {
   }
 });
 
-applyAppearance();
-render();
-setSyncStatus(syncConfigured() ? "ready" : "local");
-
-(async function initializeSharedRoadmap() {
+async function initializeSharedRoadmap() {
   const hasLocalRoadmap = Boolean(localStorage.getItem(STORAGE_KEY));
   const localIsRemoteCache = localStorage.getItem(REMOTE_CACHE_KEY) === "1";
   if (syncConfigured()) {
@@ -2155,7 +2363,12 @@ setSyncStatus(syncConfigured() ? "ready" : "local");
   } else if (!hasLocalRoadmap || localIsRemoteCache) {
     await pullFromGithub({ silent: true, allowPublicFallback: true });
   }
-})();
+}
+
+applyAppearance();
+render();
+setSyncStatus(syncConfigured() ? "ready" : "local");
+initializeAuth();
 
   </script>
 </body>
