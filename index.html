@@ -807,11 +807,11 @@ body.auth-locked > footer { display: none !important; }
           <span>BLT sync service URL</span>
           <input id="authWorkerUrl" type="url" autocomplete="url" placeholder="https://blt-roadmap-sync.your-subdomain.workers.dev" />
         </label>
-        <small>This is only needed the first time on a new browser. Use the same Cloudflare Worker URL used for GitHub sync.</small>
+        <small>This is only needed the first time on a new browser.</small>
       </div>
       <button class="button button-primary button-large auth-submit" id="authSubmit" type="submit">Unlock roadmap</button>
       <div class="auth-error" id="authError" role="alert" aria-live="polite"></div>
-      <div class="auth-security">The password is checked by the BLT Cloudflare Worker and is not stored in this page.</div>
+      <div class="auth-security"></div>
     </form>
   </section>
 
@@ -940,7 +940,7 @@ body.auth-locked > footer { display: none !important; }
         <div>
           <span class="section-kicker">MISSION BREAKDOWN</span>
           <h2>Roadmap</h2>
-          <p>Turn the SpaceShot mission into editable, trackable goals. Expand a goal to inspect details or add nested milestones.</p>
+          <p></p>
         </div>
         <div class="section-heading-actions">
           <button class="button button-secondary mobile-only" id="mobileExportBtn" type="button" onclick="document.querySelector('#exportBtn').click()">Export</button>
@@ -1007,20 +1007,8 @@ body.auth-locked > footer { display: none !important; }
         <div class="workflow-copy">
           <span class="section-kicker">BUILT FOR THE TEAM</span>
           <h2>Keep the roadmap alive.</h2>
-          <p>Update milestones during design reviews, export a backup before major changes, and keep the canonical version in your GitHub repository.</p>
+          <p></p>
         </div>
-        <div class="workflow-points">
-          <div class="workflow-point">
-            <span>01</span>
-            <div><strong>Edit in seconds</strong><small>Dates, owners, status, nesting, and descriptions.</small></div>
-          </div>
-          <div class="workflow-point">
-            <span>02</span>
-            <div><strong>Saved automatically</strong><small>Local autosave plus optional secure GitHub sync.</small></div>
-          </div>
-          <div class="workflow-point">
-            <span>03</span>
-            <div><strong>Shared source of truth</strong><small>Authorized editors can sync roadmap.json to GitHub.</small></div>
           </div>
         </div>
       </div>
@@ -1053,19 +1041,19 @@ body.auth-locked > footer { display: none !important; }
         <label class="sync-field">
           <span>Sync service URL</span>
           <input id="syncWorkerUrl" type="url" placeholder="https://blt-roadmap-sync.your-subdomain.workers.dev" autocomplete="url" />
-          <small class="sync-help">Paste the Cloudflare Worker URL after you deploy the included worker.</small>
+          <small class="sync-help">Paste the Worker URL after you deploy the included worker.</small>
         </label>
         <label class="sync-field">
           <span>Workspace write key</span>
           <input id="syncWorkspaceKey" type="password" placeholder="Shared BLT editor key" autocomplete="off" />
-          <small class="sync-help">This is NOT your GitHub token. Give this key only to club members who should be able to edit the shared roadmap.</small>
+          <small class="sync-help"></small>
         </label>
         <label class="sync-toggle">
           <div><strong>Auto-sync changes</strong><small>Push to roadmap.json about 2.5 seconds after the last edit.</small></div>
           <input id="syncAutoToggle" type="checkbox" checked />
         </label>
       </div>
-      <div class="sync-security"><strong>Security:</strong> the GitHub token never enters this webpage or localStorage. It stays encrypted as a secret in the Worker.</div>
+      <div class="sync-security"><strong>Security:</strong></div>
       <div class="sync-actions">
         <button class="button button-secondary" id="testSyncBtn" type="button">Test connection</button>
         <button class="button button-secondary" id="pullSyncBtn" type="button">Pull latest</button>
