@@ -3,7 +3,7 @@
   "club": "BLT Rocketry",
   "mission": "Liquid SpaceShot",
   "targetDate": "2030-04-30",
-  "updatedAt": "2026-08-09T22:41:33.663Z",
+  "updatedAt": "2026-08-11T16:32:38.293Z",
   "appearance": {
     "accent": "#4f8cff",
     "categoryColors": {
@@ -19,175 +19,103 @@
   },
   "goals": [
     {
-      "id": "foundation",
-      "title": "Program foundation",
-      "description": "Create the team structure, documentation habits, safety culture, budget ownership, and review cadence needed for a multi-year program.",
-      "category": "Program",
-      "dueDate": "2026-12-15",
+      "id": "goal-msma792w-9ri5y",
+      "title": "Tootheus CAD Finalization",
+      "description": "Onshape CAD of Tootheus including structures, fluids, recovery, and avionics. Must include a list of all parts required to allow for building to commence.",
+      "category": "Design",
+      "dueDate": "2026-09-25",
       "status": "in-progress",
-      "parentId": null
+      "parentId": "goal-msmabzmr-drome"
     },
     {
-      "id": "requirements",
-      "title": "Define SpaceShot mission requirements",
-      "description": "Agree on the mission-level definition of success, constraints, responsibilities, and evidence required at each major review.",
+      "id": "goal-msma8nsc-vimog",
+      "title": "Fluids System Design Review",
+      "description": "Reviewing all FAR requirements and making sure that P&ID and CAD reflects them.",
       "category": "Program",
-      "dueDate": "2027-02-15",
-      "status": "todo",
-      "parentId": "foundation"
+      "dueDate": "2026-09-18",
+      "status": "in-progress",
+      "parentId": "goal-msma792w-9ri5y"
     },
     {
-      "id": "funding",
-      "title": "Build multi-year funding & sponsorship plan",
-      "description": "Create a realistic funding model, sponsor pipeline, purchasing process, and reserve strategy for testing and launch operations.",
+      "id": "goal-msmaacr1-083gs",
+      "title": "Aerostructures Design Review",
+      "description": "All structures decisions have been made and a list of parts is created. CAD is completed and Drawings have been made for manufacturing.",
       "category": "Program",
-      "dueDate": "2027-05-01",
-      "status": "todo",
-      "parentId": "foundation"
+      "dueDate": "2026-09-18",
+      "status": "in-progress",
+      "parentId": "goal-msma792w-9ri5y"
     },
     {
-      "id": "team-training",
-      "title": "Establish member training pathway",
-      "description": "Create repeatable onboarding and subsystem training so knowledge survives leadership turnover and new members can contribute quickly.",
-      "category": "Program",
-      "dueDate": "2027-06-01",
-      "status": "todo",
-      "parentId": "foundation"
-    },
-    {
-      "id": "propulsion-path",
-      "title": "Mature liquid propulsion workstream",
-      "description": "Progress through design reviews and increasingly integrated tests while maintaining clear test readiness and safety gates.",
-      "category": "Propulsion",
-      "dueDate": "2028-06-01",
-      "status": "todo",
-      "parentId": null
-    },
-    {
-      "id": "prop-design-review",
-      "title": "Complete propulsion preliminary design review",
-      "description": "Document architecture, interfaces, risks, verification approach, and open decisions for club review.",
-      "category": "Propulsion",
-      "dueDate": "2027-08-15",
-      "status": "todo",
-      "parentId": "propulsion-path"
-    },
-    {
-      "id": "prop-test-readiness",
-      "title": "Establish propulsion test-readiness process",
-      "description": "Standardize pre-test checklists, hazard review, instrumentation readiness, data ownership, and post-test review practices.",
-      "category": "Propulsion",
-      "dueDate": "2027-11-15",
-      "status": "todo",
-      "parentId": "propulsion-path"
-    },
-    {
-      "id": "structures-path",
-      "title": "Develop flight structures & recovery",
-      "description": "Advance airframe, interfaces, recovery architecture, manufacturability, and inspection practices toward an integrated flight vehicle.",
-      "category": "Structures",
-      "dueDate": "2028-09-01",
-      "status": "todo",
-      "parentId": null
-    },
-    {
-      "id": "structures-pdr",
-      "title": "Complete structures preliminary design review",
-      "description": "Baseline structural concepts, interfaces, loads assumptions, fabrication approach, and verification plan.",
-      "category": "Structures",
-      "dueDate": "2027-10-15",
-      "status": "todo",
-      "parentId": "structures-path"
-    },
-    {
-      "id": "avionics-path",
-      "title": "Develop avionics & telemetry platform",
-      "description": "Build a maintainable flight-computing, sensing, telemetry, and ground-data workflow with staged verification.",
-      "category": "Avionics",
-      "dueDate": "2028-08-01",
-      "status": "todo",
-      "parentId": null
-    },
-    {
-      "id": "avionics-prototype",
-      "title": "Validate avionics prototype stack",
-      "description": "Demonstrate the core sensing, logging, telemetry, and recovery-control workflow in representative tests.",
-      "category": "Avionics",
-      "dueDate": "2027-12-01",
-      "status": "todo",
-      "parentId": "avionics-path"
-    },
-    {
-      "id": "ground-systems",
-      "title": "Develop ground systems & operations",
-      "description": "Create the tooling, procedures, roles, communications, and site-readiness practices required to support integrated testing and flight operations.",
-      "category": "Operations",
-      "dueDate": "2029-01-15",
-      "status": "todo",
-      "parentId": null
-    },
-    {
-      "id": "integrated-vehicle",
-      "title": "Integrated vehicle campaign",
-      "description": "Bring the major workstreams together through formal integration reviews, rehearsals, and progressive vehicle-level validation.",
-      "category": "Integration",
-      "dueDate": "2029-06-15",
-      "status": "todo",
-      "parentId": null
-    },
-    {
-      "id": "cdr",
-      "title": "Complete critical design review",
-      "description": "Freeze the primary vehicle configuration and confirm interfaces, risks, verification plans, ownership, and remaining work.",
-      "category": "Integration",
-      "dueDate": "2028-12-15",
-      "status": "todo",
-      "parentId": "integrated-vehicle"
-    },
-    {
-      "id": "full-integration",
-      "title": "Complete full-system integration rehearsal",
-      "description": "Run an end-to-end team rehearsal covering vehicle, ground systems, data flow, procedures, communications, and decision gates.",
-      "category": "Integration",
-      "dueDate": "2029-04-15",
-      "status": "todo",
-      "parentId": "integrated-vehicle"
-    },
-    {
-      "id": "flight-campaign",
-      "title": "Flight-test campaign",
-      "description": "Use progressive flight opportunities to validate operations, recovery, avionics, interfaces, team execution, and post-flight review practices.",
-      "category": "Flight Test",
-      "dueDate": "2030-02-01",
-      "status": "todo",
-      "parentId": null
-    },
-    {
-      "id": "dress-rehearsal",
-      "title": "Complete mission dress rehearsal",
-      "description": "Execute the complete launch-day process with the final team structure, checklists, communications, and go/no-go criteria.",
-      "category": "Flight Test",
-      "dueDate": "2030-02-15",
-      "status": "todo",
-      "parentId": "flight-campaign"
-    },
-    {
-      "id": "spaceshot-readiness",
-      "title": "SpaceShot readiness review",
-      "description": "Close mission-critical actions and confirm vehicle, team, site, documentation, logistics, and contingency readiness.",
+      "id": "goal-msmabzmr-drome",
+      "title": "Tootheus Launch Attempt",
+      "description": "A launch attempt of the Tootheus Launch Vehicle",
       "category": "Mission",
-      "dueDate": "2030-03-15",
+      "dueDate": "2027-04-17",
       "status": "todo",
       "parentId": null
     },
     {
-      "id": "spaceshot",
-      "title": "Liquid SpaceShot attempt",
-      "description": "BLT's April 2030 mission milestone.",
-      "category": "Mission",
-      "dueDate": "2030-04-30",
+      "id": "goal-msmafbi2-3yv8z",
+      "title": "Tootheus System Testing",
+      "description": "Waterflow tests, Instrumentation tests, Click Tests, Cold Flow, and Static Fire have been completed.",
+      "category": "Testing",
+      "dueDate": "2027-02-05",
       "status": "todo",
-      "parentId": "spaceshot-readiness"
+      "parentId": "goal-msmabzmr-drome"
+    },
+    {
+      "id": "goal-msmahitv-jb0yw",
+      "title": "Recovery Design Review",
+      "description": "Full analysis and recovery strategy has been considered and written in a short report. CAD has been implemented into aerostructures.",
+      "category": "Program",
+      "dueDate": "2026-09-18",
+      "status": "todo",
+      "parentId": "goal-msma792w-9ri5y"
+    },
+    {
+      "id": "goal-msmame7i-olovj",
+      "title": "Avionics Design Review",
+      "description": "Avionics upgrades / system has been designed and implemented into CAD, short report has been written.",
+      "category": "Program",
+      "dueDate": "2026-09-18",
+      "status": "todo",
+      "parentId": "goal-msma792w-9ri5y"
+    },
+    {
+      "id": "goal-msmaqrkc-xllfr",
+      "title": "Tootheus Manufacturing and Assembly",
+      "description": "Fully assembled launch vehicle",
+      "category": "Manufacturing",
+      "dueDate": "2026-11-13",
+      "status": "todo",
+      "parentId": "goal-msmabzmr-drome"
+    },
+    {
+      "id": "goal-msmaspaj-qhl4c",
+      "title": "Tootheus Launch Readiness Review",
+      "description": "Meeting with experts and slide presentations covering the full design of the rocket",
+      "category": "Readiness",
+      "dueDate": "2027-03-19",
+      "status": "todo",
+      "parentId": "goal-msmabzmr-drome"
+    },
+    {
+      "id": "goal-msmax8pb-zdgmf",
+      "title": "Liquid Space Shot Launch",
+      "description": "Successful launch of the world's first liquid space shot launched from a collegiate rocketry team.",
+      "category": "Mission",
+      "dueDate": "2030-04-20",
+      "status": "todo",
+      "parentId": null
+    },
+    {
+      "id": "goal-msmazi46-ttwgn",
+      "title": "DONKEY Booster Launch Vehicle",
+      "description": "This is the first stage of the space shot, which will be launched and tested in 2028.",
+      "category": "Sub Mission",
+      "dueDate": "2028-04-15",
+      "status": "todo",
+      "parentId": "goal-msmax8pb-zdgmf"
     }
   ]
 }
