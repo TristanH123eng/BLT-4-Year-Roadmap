@@ -3,7 +3,7 @@
   "club": "BLT Rocketry",
   "mission": "Liquid SpaceShot",
   "targetDate": "2030-04-30",
-  "updatedAt": "2026-08-11T16:32:38.293Z",
+  "updatedAt": "2026-08-11T16:34:07.978Z",
   "appearance": {
     "accent": "#4f8cff",
     "categoryColors": {
@@ -116,6 +116,15 @@
       "dueDate": "2028-04-15",
       "status": "todo",
       "parentId": "goal-msmax8pb-zdgmf"
+    },
+    {
+      "id": "goal-msovr8ii-ykcri",
+      "title": "S.H.R.E.K Engine Manufactured",
+      "description": "",
+      "category": "Propulsion",
+      "dueDate": "2027-08-11",
+      "status": "todo",
+      "parentId": "goal-msmazi46-ttwgn"
     }
   ]
 }
